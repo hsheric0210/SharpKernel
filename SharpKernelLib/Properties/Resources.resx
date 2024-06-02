@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ALSysIO64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\ALSysIO64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AMD_AOD215" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\AODDriver215.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AMD_PdFwKrnl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\PdFwKrnl.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AMD_RyzenMasterDriver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\AMDRyzenMasterDriver.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Asio2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\asio2.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AsIO3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\AsIO3.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ASRock_106" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\AsrDrv106.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ASRock_107" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\AsrDrv107.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ASRock_107n" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\AsrDrv107n.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ASRock_AppShop103" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\AppShopDrv103.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ASRock_Axtu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\AxtuDrv.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ATSZIO64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\ATSZIO64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CheatEngine_Dbk64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\dbk64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DbUtil2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\dbutildrv2.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DbUtil23" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\DbUtil2_3.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DirectIo64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\DirectIo64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EchoDriver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\echo_driver.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EneIo64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\EneIo64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EneTechIo64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\EneTechIo64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EneTechIo64B" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\ene2.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EVGA_Eleetx1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\eleetx1.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Gdrv" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\gdrv.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GLCKIO2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\GLCKIO2.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Gmerdrv" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\gmerdrv.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="HP_Etdsupp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\etdsupp.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="HW64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\HW64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Inpoutx64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\inpoutx64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Intel_Nal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\iQVW64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Irec" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\irec.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KExplore" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\KExplore.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KObjExp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\KObjExp.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KProcessHacker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\kprocesshacker.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KRegExp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\KRegExp.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LDD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\LDD.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Lha" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\lha.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Mimikatz_Mimidrv" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\mimidrv.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MsIo64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\MsIo64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MSI_WinIo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\heavenluo.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Nvoclock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\nvoclock.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PassMark_OSF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\DirectIo64_2.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Pcdsrvc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\pcdsrvc_x64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PhyDMACC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\PhyDMACC.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Phymemx64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\Phymemx64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="physmem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\physmem.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pmxdrv64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\pmxdrv64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProcExp1627" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\procexp1627.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ProcExp1702" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\procexp1702.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RTCore64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\RTCore64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Rtkio64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\rtkio64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Rzpnk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\rzpnk.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SysDrv3S" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\SysDrv3S.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WinRing0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\WinRing0x64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WnBios64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\wnBios64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ZemanaAM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\amsdk.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>
