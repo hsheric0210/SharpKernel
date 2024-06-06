@@ -1,0 +1,18 @@
+1. Do not expose unsafe types outside the NtWrapper.cs
+  * Accepting or returning unsafe types from the utility methods is not allowed.
+  * Especially: void*
+
+2. Do not expose Windows.Win32, Windows.Wdk types, structs, enums outside the NtWrapper.cs
+  * Accepting or returning internal types from the utility method is not allowed.
+  * Especially: HANDLE, UNICODE_STRING
+
+3. Prefer signed types over unsigned types (except UIntPtr)
+  * uint -> int
+  * ulong -> long
+  * This only apply for those 'actually used as signed though typed as unsigned' things. (e.g. 'startIndex, bufferSize, length' parameters)
+
+4. Return the result value by return type. Do not use 'out' or 'ref' parameters unless you need to return multiple values.
+
+5. Always throw an exception if any errors occurred. Returning bool(success or fail), NTSTATUS(error status code) is not recommended.
+
+6. Prefer using pointers inside the utility functions rather than 'GCHandle.Alloc' or 'Marshal.AllocHGlobal'.

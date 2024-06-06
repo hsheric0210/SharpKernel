@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SharpKernelLib.SessionProviders;
 
 namespace SharpKernelLib.RemoteCodeExecution
 {
     public interface IRemoteCodeExecutionProvider
     {
+        bool IsSupported(IProvider provider);
     }
 }

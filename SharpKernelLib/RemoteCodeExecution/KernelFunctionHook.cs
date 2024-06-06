@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using SharpKernelLib.SessionProviders;
 
 namespace SharpKernelLib.RemoteCodeExecution
 {
@@ -8,5 +7,6 @@ namespace SharpKernelLib.RemoteCodeExecution
     {
         // Code Execution by hooking random kernel functions (KDMapper style)
         // A bit unsafe because uses timing-attack(install hook; use; then remove it fast as possible) to bypass PatchGuard but most simple
+        public bool IsSupported(IProvider provider) => throw new NotImplementedException();
     }
 }

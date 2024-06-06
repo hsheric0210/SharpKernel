@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SharpKernelLib.SessionProviders.Core
 {
@@ -29,7 +27,7 @@ namespace SharpKernelLib.SessionProviders.Core
 
         public bool IsProcessAccessSupported => false;
 
-        public bool IsAvailable() => true;
+        public bool IsSupported() => true;
         public bool PostOpenDriverCallback() => throw new NotImplementedException();
         public bool PreOpenDriverCallback() => throw new NotImplementedException();
         public bool RegisterDriverCallback() => throw new NotImplementedException();

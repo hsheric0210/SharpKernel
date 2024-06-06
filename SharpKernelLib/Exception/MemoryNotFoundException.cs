@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SharpKernelLib.Exception
+﻿namespace SharpKernelLib.Exception
 {
-    public class MemoryNotFoundException : SharpKernelException
+    public class MemoryNotFoundException : MemoryAccessException
     {
         public MemoryNotFoundException() : base()
         {

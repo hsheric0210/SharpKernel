@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SharpKernelLib
+﻿namespace SharpKernelLib.Features
 {
     /// <summary>
     /// Map a driver to the kernel memory.
