@@ -36,5 +36,42 @@ namespace SharpKernelLib.Utils
 
             return new IntPtr(buffer);
         }
+
+        /// <summary>
+        /// supFreeLockedMemory: Wrapper for VirtualUnlock + VirtualFreeEx.
+        /// </summary>
+        internal static void FreeLockedVM(IntPtr memory, UIntPtr size)
+        {
+            if (!VirtualUnlock(memory.ToPointer(), size))
+                return;
+
+            VirtualFreeEx(NtCurrentProcess(), memory.ToPointer(), size, VIRTUAL_FREE_TYPE.MEM_RELEASE);
+        }
+
+        internal static uint ChooseNonPagedPoolTag()
+        {
+            var info = (SYSTEM_POOLTAG_INFORMATION*)GetNtSystemInfo(SystemInformationClass.SystemPoolTagInformation, out _);
+            var tag = 0x20206f49u; // '  oI'
+            var maxUse = 0ul;
+
+            try
+            {
+                for (uint i = 0, j = info->Count; i < j; i++)
+                {
+                    var pool = info->TagInfo[i];
+                    if (pool.NonPagedUsed.ToUInt64() > maxUse)
+                    {
+                        maxUse = pool.NonPagedUsed.ToUInt64();
+                        tag = pool.Tag;
+                    }
+                }
+            }
+            finally
+            {
+                Marshal.FreeHGlobal((IntPtr)info);
+            }
+
+            return tag;
+        }
     }
 }

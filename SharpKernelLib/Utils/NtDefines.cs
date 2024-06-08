@@ -161,6 +161,152 @@ namespace SharpKernelLib.Utils
         Uefi = 2
     }
 
+    internal enum SecurityRID : uint
+    {
+        SECURITY_DIALUP_RID = 0x00000001,
+        SECURITY_NETWORK_RID = 0x00000002,
+        SECURITY_BATCH_RID = 0x00000003,
+        SECURITY_INTERACTIVE_RID = 0x00000004,
+        SECURITY_LOGON_IDS_RID = 0x00000005,
+        SECURITY_LOGON_IDS_RID_COUNT = 3,
+        SECURITY_SERVICE_RID = 0x00000006,
+        SECURITY_ANONYMOUS_LOGON_RID = 0x00000007,
+        SECURITY_PROXY_RID = 0x00000008,
+        SECURITY_ENTERPRISE_CONTROLLERS_RID = 0x00000009,
+        SECURITY_SERVER_LOGON_RID = SECURITY_ENTERPRISE_CONTROLLERS_RID,
+        SECURITY_PRINCIPAL_SELF_RID = 0x0000000A,
+        SECURITY_AUTHENTICATED_USER_RID = 0x0000000B,
+        SECURITY_RESTRICTED_CODE_RID = 0x0000000C,
+        SECURITY_TERMINAL_SERVER_RID = 0x0000000D,
+        SECURITY_REMOTE_LOGON_RID = 0x0000000E,
+        SECURITY_THIS_ORGANIZATION_RID = 0x0000000F,
+        SECURITY_IUSER_RID = 0x00000011,
+        SECURITY_LOCAL_SYSTEM_RID = 0x00000012,
+        SECURITY_LOCAL_SERVICE_RID = 0x00000013,
+        SECURITY_NETWORK_SERVICE_RID = 0x00000014,
+
+        SECURITY_ENTERPRISE_READONLY_CONTROLLERS_RID = 0x00000016,
+
+        SECURITY_BUILTIN_DOMAIN_RID = 0x00000020,
+        SECURITY_WRITE_RESTRICTED_CODE_RID = 0x00000021,
+
+        SECURITY_PACKAGE_BASE_RID = 0x00000040,
+        SECURITY_PACKAGE_RID_COUNT = 2,
+        SECURITY_PACKAGE_NTLM_RID = 0x0000000A,
+        SECURITY_PACKAGE_SCHANNEL_RID = 0x0000000E,
+        SECURITY_PACKAGE_DIGEST_RID = 0x00000015,
+
+        SECURITY_CRED_TYPE_BASE_RID = 0x00000041,
+        SECURITY_CRED_TYPE_RID_COUNT = 2,
+        SECURITY_CRED_TYPE_THIS_ORG_CERT_RID = 0x00000001,
+
+        SECURITY_MIN_BASE_RID = 0x00000050,
+
+        SECURITY_SERVICE_ID_BASE_RID = 0x00000050,
+        SECURITY_SERVICE_ID_RID_COUNT = 6,
+
+        SECURITY_RESERVED_ID_BASE_RID = 0x00000051,
+
+        SECURITY_APPPOOL_ID_BASE_RID = 0x00000052,
+        SECURITY_APPPOOL_ID_RID_COUNT = 6,
+
+        SECURITY_VIRTUALSERVER_ID_BASE_RID = 0x00000053,
+        SECURITY_VIRTUALSERVER_ID_RID_COUNT = 6,
+
+        SECURITY_USERMODEDRIVERHOST_ID_BASE_RID = 0x00000054,
+        SECURITY_USERMODEDRIVERHOST_ID_RID_COUNT = 6,
+
+        SECURITY_CLOUD_INFRASTRUCTURE_SERVICES_ID_BASE_RID = 0x00000055,
+        SECURITY_CLOUD_INFRASTRUCTURE_SERVICES_ID_RID_COUNT = 6,
+
+        SECURITY_WMIHOST_ID_BASE_RID = 0x00000056,
+        SECURITY_WMIHOST_ID_RID_COUNT = 6,
+
+        SECURITY_TASK_ID_BASE_RID = 0x00000057,
+
+        SECURITY_NFS_ID_BASE_RID = 0x00000058,
+
+        SECURITY_COM_ID_BASE_RID = 0x00000059,
+
+        SECURITY_WINDOW_MANAGER_BASE_RID = 0x0000005a,
+
+        SECURITY_RDV_GFX_BASE_RID = 0x0000005b,
+
+        SECURITY_DASHOST_ID_BASE_RID = 0x0000005c,
+        SECURITY_DASHOST_ID_RID_COUNT = 6,
+
+        SECURITY_VIRTUALACCOUNT_ID_RID_COUNT = 6,
+
+        SECURITY_MAX_BASE_RID = 0x0000006f,
+
+        SECURITY_MAX_ALWAYS_FILTERED = 0x000003E7,
+        SECURITY_MIN_NEVER_FILTERED = 0x000003E8,
+
+        SECURITY_OTHER_ORGANIZATION_RID = 0x000003E8,
+
+        SECURITY_WINDOWSMOBILE_ID_BASE_RID = 0x00000070,
+
+        DOMAIN_GROUP_RID_AUTHORIZATION_DATA_IS_COMPOUNDED = 0x000001f0,
+        DOMAIN_GROUP_RID_AUTHORIZATION_DATA_CONTAINS_CLAIMS = 0x000001f1,
+        DOMAIN_GROUP_RID_ENTERPRISE_READONLY_DOMAIN_CONTROLLERS = 0x000001f2,
+
+        FOREST_USER_RID_MAX = 0x000001F3,
+
+        DOMAIN_USER_RID_ADMIN = 0x000001F4,
+        DOMAIN_USER_RID_GUEST = 0x000001F5,
+        DOMAIN_USER_RID_KRBTGT = 0x000001F6,
+
+        DOMAIN_USER_RID_MAX = 0x000003E7,
+
+        DOMAIN_GROUP_RID_ADMINS = 0x00000200,
+        DOMAIN_GROUP_RID_USERS = 0x00000201,
+        DOMAIN_GROUP_RID_GUESTS = 0x00000202,
+        DOMAIN_GROUP_RID_COMPUTERS = 0x00000203,
+        DOMAIN_GROUP_RID_CONTROLLERS = 0x00000204,
+        DOMAIN_GROUP_RID_CERT_ADMINS = 0x00000205,
+        DOMAIN_GROUP_RID_SCHEMA_ADMINS = 0x00000206,
+        DOMAIN_GROUP_RID_ENTERPRISE_ADMINS = 0x00000207,
+        DOMAIN_GROUP_RID_POLICY_ADMINS = 0x00000208,
+        DOMAIN_GROUP_RID_READONLY_CONTROLLERS = 0x00000209,
+        DOMAIN_GROUP_RID_CLONEABLE_CONTROLLERS = 0x0000020a,
+
+        DOMAIN_ALIAS_RID_ADMINS = 0x00000220,
+        DOMAIN_ALIAS_RID_USERS = 0x00000221,
+        DOMAIN_ALIAS_RID_GUESTS = 0x00000222,
+        DOMAIN_ALIAS_RID_POWER_USERS = 0x00000223,
+
+        DOMAIN_ALIAS_RID_ACCOUNT_OPS = 0x00000224,
+        DOMAIN_ALIAS_RID_SYSTEM_OPS = 0x00000225,
+        DOMAIN_ALIAS_RID_PRINT_OPS = 0x00000226,
+        DOMAIN_ALIAS_RID_BACKUP_OPS = 0x00000227,
+
+        DOMAIN_ALIAS_RID_REPLICATOR = 0x00000228,
+        DOMAIN_ALIAS_RID_RAS_SERVERS = 0x00000229,
+        DOMAIN_ALIAS_RID_PREW2KCOMPACCESS = 0x0000022A,
+        DOMAIN_ALIAS_RID_REMOTE_DESKTOP_USERS = 0x0000022B,
+        DOMAIN_ALIAS_RID_NETWORK_CONFIGURATION_OPS = 0x0000022C,
+        DOMAIN_ALIAS_RID_INCOMING_FOREST_TRUST_BUILDERS = 0x0000022D,
+
+        DOMAIN_ALIAS_RID_MONITORING_USERS = 0x0000022E,
+        DOMAIN_ALIAS_RID_LOGGING_USERS = 0x0000022F,
+        DOMAIN_ALIAS_RID_AUTHORIZATIONACCESS = 0x00000230,
+        DOMAIN_ALIAS_RID_TS_LICENSE_SERVERS = 0x00000231,
+        DOMAIN_ALIAS_RID_DCOM_USERS = 0x00000232,
+
+        DOMAIN_ALIAS_RID_IUSERS = 0x00000238,
+        DOMAIN_ALIAS_RID_CRYPTO_OPERATORS = 0x00000239,
+        DOMAIN_ALIAS_RID_CACHEABLE_PRINCIPALS_GROUP = 0x0000023B,
+        DOMAIN_ALIAS_RID_NON_CACHEABLE_PRINCIPALS_GROUP = 0x0000023C,
+        DOMAIN_ALIAS_RID_EVENT_LOG_READERS_GROUP = 0x0000023D,
+        DOMAIN_ALIAS_RID_CERTSVC_DCOM_ACCESS_GROUP = 0x0000023e,
+        DOMAIN_ALIAS_RID_RDS_REMOTE_ACCESS_SERVERS = 0x0000023f,
+        DOMAIN_ALIAS_RID_RDS_ENDPOINT_SERVERS = 0x00000240,
+        DOMAIN_ALIAS_RID_RDS_MANAGEMENT_SERVERS = 0x00000241,
+        DOMAIN_ALIAS_RID_HYPER_V_ADMINS = 0x00000242,
+        DOMAIN_ALIAS_RID_ACCESS_CONTROL_ASSISTANCE_OPS = 0x00000243,
+        DOMAIN_ALIAS_RID_REMOTE_MANAGEMENT_USERS = 0x00000244,
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct SYSTEM_CODEINTEGRITY_INFORMATION
     {
@@ -173,7 +319,8 @@ namespace SharpKernelLib.Utils
     {
         public UIntPtr NumberOfHandles;
         public UIntPtr Reserved;
-        public IntPtr Handles; // SYSTEM_HANDLE_TABLE_ENTRY_INFO_EX[NumberOfHandles]
+        [MarshalAs(UnmanagedType.LPArray, SizeConst = 1)]
+        public SYSTEM_HANDLE_TABLE_ENTRY_INFO_EX[] Handles;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -206,7 +353,8 @@ namespace SharpKernelLib.Utils
     internal struct RTL_PROCESS_MODULES
     {
         public uint NumberOfModules;
-        public IntPtr Modules; // RTL_PROCESS_MODULE_INFORMATION[NumberOfModules]
+        [MarshalAs(UnmanagedType.LPArray, SizeConst = 1)]
+        public RTL_PROCESS_MODULE_INFORMATION[] Modules;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -222,7 +370,7 @@ namespace SharpKernelLib.Utils
         public ushort LoadCount;
         public ushort OffsetToFileName;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
-        public char[] FullPathName;
+        public byte[] FullPathName;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -247,5 +395,81 @@ namespace SharpKernelLib.Utils
         public Guid BootIdentifier;
         public FirmwareType FirmwareType;
         public ulong BootFlags;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct SYSTEM_POOLTAG_INFORMATION
+    {
+        public uint Count;
+        [MarshalAs(UnmanagedType.LPArray, SizeConst = 1)]
+        public SYSTEM_POOLTAG[] TagInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct SYSTEM_POOLTAG
+    {
+        public uint Tag;
+        public uint PagedAllocs;
+        public uint PagedFrees;
+        public UIntPtr PagedUsed;
+        public uint NonPagedAllocs;
+        public uint NonPagedFrees;
+        public UIntPtr NonPagedUsed;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ExceptionPointers
+    {
+        public IntPtr ExceptionRecord;
+        public IntPtr ContextRecord;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ExceptionRecord
+    {
+        public uint ExceptionCode;
+        public uint ExceptionFlags;
+        public IntPtr ExceptionRecordPointer;
+        public IntPtr ExceptionAddress;
+        public uint NumberParameters;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 15)]
+        public IntPtr[] ExceptionInformation;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct SECURITY_DESCRIPTOR
+    {
+        public byte Revision;
+        public byte Sbz1;
+        public ushort Control;
+        public IntPtr Owner;
+        public IntPtr Group;
+        public IntPtr Sacl;
+        public IntPtr Dacl;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ACE_HEADER
+    {
+        public byte AceType;
+        public byte AceFlags;
+        public ushort AceSize;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ACCESS_ALLOWED_ACE
+    {
+        public ACE_HEADER Header;
+        public AccessMask Mask;
+        public uint SidStart;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct SID
+    {
+        public byte Revision;
+        public byte SubAuthorityCount;
+        public Windows.Win32.Security.SID_IDENTIFIER_AUTHORITY IdentifierAuthority;
+        public IntPtr SubAuthority; // uint[ANYSIZE_ARRAY]
     }
 }

@@ -22,6 +22,8 @@ namespace SharpKernelLib.Utils
     {
         internal const ulong PAGE_SIZE = 0x1000ul; // Windows Default Page Size: 1024 bytes
         internal const uint SYSTEM_PROCESSID = 4;
+        internal const uint ALL_1_UINT = unchecked((uint)-1);
+        internal const ulong ALL_1_ULONG = unchecked((ulong)-1L);
 
         /// <summary>
         /// supMapPhysicalMemory: Map physical memory.
@@ -48,15 +50,17 @@ namespace SharpKernelLib.Utils
             if (mappedSection == IntPtr.Zero)
                 return;
 
-            try
-            {
-                var offset = (ulong)physicalAddress.ToInt64() & ~(PAGE_SIZE - 1);
-                Marshal.Copy(mappedSection.Add(offset), buffer, startIndex, length);
-            }
-            finally
-            {
-                UnmapSection(mappedSection);
-            }
+            var offset = (ulong)physicalAddress.ToInt64() & ~(PAGE_SIZE - 1);
+
+            // Prevent access violation crash
+            VEHTryCatchFinally(
+                () => Marshal.Copy(mappedSection.Add(offset), buffer, startIndex, length),
+                (ExceptionRecord _) =>
+                {
+                    //ignore
+                },
+                () => UnmapSection(mappedSection)
+            );
         }
 
         internal static byte[] ReadPhysicalMemory(IntPtr sectionHandle, IntPtr physicalAddress, int length)
@@ -73,15 +77,17 @@ namespace SharpKernelLib.Utils
             if (mappedSection == IntPtr.Zero)
                 return;
 
-            try
-            {
-                var offset = (ulong)physicalAddress.ToInt64() & ~(PAGE_SIZE - 1);
-                Marshal.Copy(buffer, startIndex, mappedSection.Add(offset), length);
-            }
-            finally
-            {
-                UnmapSection(mappedSection);
-            }
+            var offset = (ulong)physicalAddress.ToInt64() & ~(PAGE_SIZE - 1);
+
+            // Prevent access violation crash
+            VEHTryCatchFinally(
+                () => Marshal.Copy(buffer, startIndex, mappedSection.Add(offset), length),
+                (ExceptionRecord _) =>
+                {
+                    //ignore
+                },
+                () => UnmapSection(mappedSection)
+            );
         }
 
         internal static void WritePhysicalMemory(IntPtr sectionHandle, IntPtr physicalAddress, byte[] buffer)
@@ -94,8 +100,8 @@ namespace SharpKernelLib.Utils
         internal static IntPtr DuplicatePhysicalMemoryHandle(IntPtr deviceHandle, IntPtr sourceProcessHandle, DuplicateHandleDelegate duplicateHandle)
         {
             var sectionHandle = HANDLE.Null;
-            var handleArrayNativeBuf = IntPtr.Zero;
-            var dupHandleInfo = IntPtr.Zero;
+            SYSTEM_HANDLE_INFORMATION_EX* handleInfo = null;
+            OBJECT_NAME_INFORMATION* dupHandleInfo = null;
 
             try
             {
@@ -117,21 +123,22 @@ namespace SharpKernelLib.Utils
                     throw new MemoryAccessException("DuplicatePhysicalMemoryHandle#NtOpenSection", new NtStatusException(ntstatus));
 
                 // Marshal manually because .NET marshaller doesn't support dynamic array
-                handleArrayNativeBuf = GetNtSystemInfo(SystemInformationClass.SystemExtendedHandleInformation, out _);
-                var handleArrayNative = Marshal.PtrToStructure<SYSTEM_HANDLE_INFORMATION_EX>(handleArrayNativeBuf);
-                var handleArray = new SYSTEM_HANDLE_TABLE_ENTRY_INFO_EX[(int)handleArrayNative.NumberOfHandles];
-                for (ulong i = 0, j = handleArrayNative.NumberOfHandles.ToUInt64(); i < j; i++)
-                    handleArray[i] = Marshal.PtrToStructure<SYSTEM_HANDLE_TABLE_ENTRY_INFO_EX>(handleArrayNative.Handles.Add(i * (ulong)sizeof(SYSTEM_HANDLE_TABLE_ENTRY_INFO_EX)));
+                handleInfo = (SYSTEM_HANDLE_INFORMATION_EX*)GetNtSystemInfo(SystemInformationClass.SystemExtendedHandleInformation, out _);
 
                 var currentProcessId = GetCurrentProcessId();
 
-                var sectionObjectTypeElements = handleArray
-                    .Where(handle => handle.UniqueProcessId.ToInt64() == currentProcessId && handle.HandleValue == sectionHandle)
-                    .Select(handle => handle.ObjectTypeIndex);
-                if (!sectionObjectTypeElements.Any())
-                    throw new MemoryAccessException("SectionObjectType find fail");
-
-                var sectionObjectType = sectionObjectTypeElements.First();
+                var sectionObjectType = ALL_1_UINT;
+                for (ulong i = 0u, j = handleInfo->NumberOfHandles.ToUInt64(); i < j; i++)
+                {
+                    var handle = handleInfo->Handles[i];
+                    if (handle.UniqueProcessId.ToInt64() == currentProcessId && handle.HandleValue == sectionHandle)
+                    {
+                        sectionObjectType = handle.ObjectTypeIndex;
+                        break;
+                    }
+                }
+                if (sectionObjectType == ALL_1_UINT)
+                    throw new MemoryNotFoundException("SectionObjectType find fail");
 
                 NtClose(sectionHandle);
                 sectionHandle = HANDLE.Null;
@@ -139,21 +146,19 @@ namespace SharpKernelLib.Utils
                 sectionNameU = new UNICODE_STRING();
                 RtlInitUnicodeString(ref sectionNameU, @"\Device\PhysicalMemory");
 
-                foreach (var handleEntry in handleArray)
+                for (ulong i = 0u, j = handleInfo->NumberOfHandles.ToUInt64(); i < j; i++)
                 {
-                    if (handleEntry.UniqueProcessId == (IntPtr)SYSTEM_PROCESSID && handleEntry.ObjectTypeIndex == sectionObjectType && handleEntry.GrantedAccess == (uint)AccessMask.SECTION_ALL_ACCESS)
+                    var handle = handleInfo->Handles[i];
+                    if (handle.UniqueProcessId == (IntPtr)SYSTEM_PROCESSID && handle.ObjectTypeIndex == sectionObjectType && handle.GrantedAccess == (uint)AccessMask.SECTION_ALL_ACCESS)
                     {
-                        var dupHandle = duplicateHandle(deviceHandle, SYSTEM_PROCESSID, sourceProcessHandle, handleEntry.HandleValue, AccessMask.MAXIMUM_ALLOWED, 0, 0);
-                        dupHandleInfo = QueryObjectInformation(ObjectInformationClass.ObjectNameInformation, dupHandle, out _);
-                        var handleName = Marshal.PtrToStructure<OBJECT_NAME_INFORMATION>(dupHandleInfo).Name;
-                        if (RtlEqualUnicodeString(handleName, sectionNameU, true))
-                        {
+                        var dupHandle = duplicateHandle(deviceHandle, SYSTEM_PROCESSID, sourceProcessHandle, handle.HandleValue, AccessMask.MAXIMUM_ALLOWED, 0, 0);
+                        dupHandleInfo = (OBJECT_NAME_INFORMATION*)QueryObjectInformation(ObjectInformationClass.ObjectNameInformation, dupHandle, out _);
+                        if (RtlEqualUnicodeString(dupHandleInfo->Name, sectionNameU, true))
                             return dupHandle;
-                        }
                     }
                 }
 
-                throw new MemoryNotFoundException();
+                throw new MemoryNotFoundException("PhysicalMemory handle not found");
             }
             catch (NtStatusException ex)
             {
@@ -164,11 +169,11 @@ namespace SharpKernelLib.Utils
                 if (sectionHandle != HANDLE.Null)
                     NtClose(sectionHandle);
 
-                if (handleArrayNativeBuf != IntPtr.Zero)
-                    Marshal.FreeHGlobal(handleArrayNativeBuf);
+                if (handleInfo != null)
+                    Marshal.FreeHGlobal((IntPtr)handleInfo);
 
-                if (dupHandleInfo != IntPtr.Zero)
-                    Marshal.FreeHGlobal(dupHandleInfo);
+                if (dupHandleInfo != null)
+                    Marshal.FreeHGlobal((IntPtr)dupHandleInfo);
             }
         }
 
@@ -181,27 +186,42 @@ namespace SharpKernelLib.Utils
             var lmTargetOffset = Marshal.OffsetOf<PROCESSOR_START_BLOCK>("LmTarget");
             var cr3Offset = Marshal.OffsetOf<PROCESSOR_START_BLOCK>("ProcessorState").Add(Marshal.OffsetOf<KSPECIAL_REGISTERS>("Cr3"));
 
-            // hope this don't fuq up the .NET vm
-            while (offset < 0x100000) // 1 MiB limit
-            {
-                offset += (int)PAGE_SIZE;
+            var cr3Value = IntPtr.Zero;
 
-                var jmp = (ulong)Marshal.ReadInt64(lowStub1M + offset);
-                if ((jmp & 0xffffffffffff00ff) != 0x00000001000600E9)
-                    continue;
+            // Prevent access violation crash
+            VEHTryCatch(
+                () =>
+                {
+                    // TODO: parallel search using 'Parallel.For'
+                    while (offset < 0x100000) // 1 MiB limit
+                    {
+                        offset += (int)PAGE_SIZE;
 
-                var lmTarget = (ulong)Marshal.ReadInt64((lowStub1M + offset).Add(lmTargetOffset));
-                if ((lmTarget & 0xfffff80000000003) != 0xfffff80000000000)
-                    continue;
+                        // PROCESSOR_START_BLOCK->Jmp
+                        var jmp = *(ulong*)(lowStub1M + offset);
+                        if ((jmp & 0xffffffffffff00ff) != 0x00000001000600E9)
+                            continue;
 
-                var cr3 = (ulong)Marshal.ReadInt64((lowStub1M + offset).Add(cr3Offset));
-                if ((cr3 & 0xffffff0000000fff) != 0)
-                    continue;
+                        // PROCESSOR_START_BLOCK->LmTarget
+                        var lmTarget = *(ulong*)(lowStub1M + offset).Add(lmTargetOffset);
+                        if ((lmTarget & 0xfffff80000000003) != 0xfffff80000000000)
+                            continue;
 
-                return new IntPtr((long)cr3);
-            }
+                        // PROCESSOR_START_BLOCK->ProcessorState->Cr3
+                        var cr3 = *(ulong*)(lowStub1M + offset).Add(cr3Offset);
+                        if ((cr3 & 0xffffff0000000fff) != 0)
+                            continue;
 
-            return IntPtr.Zero;
+                        cr3Value = new IntPtr((long)cr3);
+                    }
+                },
+                (ExceptionRecord _) =>
+                {
+                    // ignore
+                }
+            );
+
+            return cr3Value;
         }
     }
 }

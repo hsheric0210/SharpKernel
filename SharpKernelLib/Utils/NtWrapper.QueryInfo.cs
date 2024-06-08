@@ -90,13 +90,14 @@ namespace SharpKernelLib.Utils
                     throw new SessionInitializationException("IsObjectExists#NtQueryDirectoryObject(Data)", new NtStatusException(ntstatus));
                 }
 
-                var dirInfo = Marshal.PtrToStructure<OBJECT_DIRECTORY_INFORMATION>(buffer);
+                var dirName = ((OBJECT_DIRECTORY_INFORMATION*)buffer)->Name;
                 Marshal.FreeHGlobal(buffer);
-                if (RtlEqualUnicodeString(dirInfo.Name, objectNameU, true))
+                if (RtlEqualUnicodeString(dirName, objectNameU, true))
                 {
                     found = true;
                     break;
                 }
+
             } while (true);
 
             if (!directoryHandle.IsNull)
@@ -111,7 +112,7 @@ namespace SharpKernelLib.Utils
         /// <remarks>
         /// DON'T FORGET TO 'Marshal.FreeHGlobal()' the returned buffer!
         /// </remarks>
-        private static IntPtr GetNtSystemInfo(SystemInformationClass infoClass, out int returnSize)
+        private static void* GetNtSystemInfo(SystemInformationClass infoClass, out int returnSize)
         {
             var bufferSize = (int)PAGE_SIZE;
             var returnedLength = 0u;
@@ -136,7 +137,7 @@ namespace SharpKernelLib.Utils
             }
 
             returnSize = (int)returnedLength;
-            return buffer;
+            return buffer.ToPointer();
         }
 
         private delegate NTSTATUS QueryInformationRoutine(HANDLE handle, uint informationClass, void* informationBuffer, uint informationBufferLength, out uint returnLength);
@@ -198,8 +199,7 @@ namespace SharpKernelLib.Utils
             // Handle unexpected return (check out  KDU ntsup.c#L810 for more information)
             if (ntstatus == (uint)NtStatus.BufferOverflow)
             {
-                var moduleArray = Marshal.PtrToStructure<RTL_PROCESS_MODULES>(buffer);
-                if (moduleArray.NumberOfModules != 0)
+                if (((RTL_PROCESS_MODULES*)buffer)->NumberOfModules != 0)
                     return buffer;
             }
 
@@ -214,9 +214,8 @@ namespace SharpKernelLib.Utils
             var buffer = GetLoadedModulesList(false, out _);
             try
             {
-                var moduleList = Marshal.PtrToStructure<RTL_PROCESS_MODULES>(buffer);
                 // ntoskrnl module is always located at Modules[0]
-                return Marshal.PtrToStructure<RTL_PROCESS_MODULE_INFORMATION>(moduleList.Modules).ImageBase;
+                return ((RTL_PROCESS_MODULES*)buffer)->Modules[0].ImageBase;
             }
             finally
             {

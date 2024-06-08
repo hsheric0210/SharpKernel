@@ -4,13 +4,22 @@ using Windows.Win32.Foundation;
 using Windows.Wdk.Foundation;
 using Microsoft.Win32.SafeHandles;
 using Windows.Win32.System.Memory;
+using static SharpKernelLib.Utils.NtWrapper;
+using Windows.Win32.Security;
 
 namespace SharpKernelLib.Utils
 {
     internal unsafe class NtUndocumented
     {
+        internal delegate int VectoredExceptionHandler(ref ExceptionPointers exceptionPointers);
+
         internal static HANDLE NtCurrentProcess() => new HANDLE((IntPtr)(-1));
+
         internal static SafeHandle NtCurrentProcess_SafeHandle() => new SafeProcessHandle((IntPtr)(-1), false);
+
+        [DllImport("kernel32.dll")]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern IntPtr AddVectoredExceptionHandler(uint first, VectoredExceptionHandler handler);
 
         [DllImport("ntdll.dll", ExactSpelling = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
@@ -44,5 +53,25 @@ namespace SharpKernelLib.Utils
         [DllImport("ntdll.dll", ExactSpelling = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         internal static extern NTSTATUS NtOpenSection(out HANDLE SectionHandle, [In] AccessMask DesiredAccess, [In] OBJECT_ATTRIBUTES* ObjectAttributes);
+
+        [DllImport("ntdll.dll", ExactSpelling = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern NTSTATUS LdrLoadDll([In, Optional] PCWSTR DllPath, [In, Optional] uint* DllCharacteristics, [In] UNICODE_STRING* DllName, out void* DllHandle);
+
+        [DllImport("ntdll.dll", ExactSpelling = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern NTSTATUS LdrUnloadDll([In] void* DllHandle);
+
+        [DllImport("ntdll.dll", ExactSpelling = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern NTSTATUS RtlSetDaclSecurityDescriptor([In, Out] PSECURITY_DESCRIPTOR SecurityDescriptor, [In] BOOLEAN DaclPresent, [In, Optional] ACL* Dacl, [In] BOOLEAN DaclDefaulted);
+
+        [DllImport("ntdll.dll", ExactSpelling = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern IMAGE_NT_HEADERS* RtlImageNtHeader([In] void* imageBase);
+
+        [DllImport("ntdll.dll", ExactSpelling = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern NTSTATUS LdrFindEntryForAddress([In] void* Address, [Out] out LDR_DATA_TABLE_ENTRY TableEntry);
     }
 }
