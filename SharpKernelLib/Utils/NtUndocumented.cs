@@ -6,6 +6,8 @@ using Microsoft.Win32.SafeHandles;
 using Windows.Win32.System.Memory;
 using static SharpKernelLib.Utils.NtWrapper;
 using Windows.Win32.Security;
+using Windows.Win32.Devices.DeviceAndDriverInstallation;
+using System.Runtime.CompilerServices;
 
 namespace SharpKernelLib.Utils
 {
@@ -73,5 +75,21 @@ namespace SharpKernelLib.Utils
         [DllImport("ntdll.dll", ExactSpelling = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         internal static extern NTSTATUS LdrFindEntryForAddress([In] void* Address, [Out] out LDR_DATA_TABLE_ENTRY TableEntry);
+
+        [DllImport("setupapi.dll", EntryPoint = "SetupDiCreateDeviceInfoW")]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern BOOL SetupDiCreateDeviceInfo(HDEVINFO DeviceInfoSet, PCWSTR DeviceName, Guid* ClassGuid, PCWSTR DeviceDescription, HWND HwndParent, uint Creationflags, SP_DEVINFO_DATA* DeviceInfoData);
+
+        [DllImport("setupapi.dll", EntryPoint = "SetupDiSetDeviceRegistryPropertyW")]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern BOOL SetupDiSetDeviceRegistryProperty(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData, uint Property, byte* PropertyBuffer, uint PropertyBufferSize);
+
+        [DllImport("setupapi.dll", ExactSpelling = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern BOOL SetupDiCallClassInstaller(uint InstallFunction, HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
+
+        [DllImport("setupapi.dll", ExactSpelling = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        internal static extern BOOL SetupDiRemoveDevice(HDEVINFO DeviceInfoSet, SP_DEVINFO_DATA* DeviceInfoData);
     }
 }

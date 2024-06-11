@@ -34,14 +34,5 @@ namespace SharpKernelLib.Utils
 
             return (IntPtr)imageBase;
         }
-
-        internal static int GetImageSize(IntPtr imageBase)
-        {
-            var ntstatus = LdrFindEntryForAddress(imageBase.ToPointer(), out var table);
-            if (!ntstatus.IsSuccess())
-                throw new NtStatusException(ntstatus);
-
-            return (int)table.SizeOfImage;
-        }
     }
 }

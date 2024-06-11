@@ -472,4 +472,13 @@ namespace SharpKernelLib.Utils
         public Windows.Win32.Security.SID_IDENTIFIER_AUTHORITY IdentifierAuthority;
         public IntPtr SubAuthority; // uint[ANYSIZE_ARRAY]
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct SP_DEVINFO_DATA
+    {
+        public uint cbSize;
+        public Guid ClassGuid;
+        public uint DevInst;
+        public IntPtr Reserved;
+    }
 }

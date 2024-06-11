@@ -6,6 +6,26 @@ using Windows.Win32.Foundation;
 
 namespace SharpKernelLib.Utils
 {
+    internal enum ImageDataDirectory
+    {
+        IMAGE_DIRECTORY_ENTRY_EXPORT = 0,
+        IMAGE_DIRECTORY_ENTRY_IMPORT = 1,
+        IMAGE_DIRECTORY_ENTRY_RESOURCE = 2,
+        IMAGE_DIRECTORY_ENTRY_EXCEPTION = 3,
+        IMAGE_DIRECTORY_ENTRY_SECURITY = 4,
+        IMAGE_DIRECTORY_ENTRY_BASERELOC = 5,
+        IMAGE_DIRECTORY_ENTRY_DEBUG = 6,
+        IMAGE_DIRECTORY_ENTRY_ARCHITECTURE = 7,
+        IMAGE_DIRECTORY_ENTRY_GLOBALPTR = 8,
+        IMAGE_DIRECTORY_ENTRY_TLS = 9,
+        IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG = 10,
+        IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT = 11,
+        IMAGE_DIRECTORY_ENTRY_IAT = 12,
+        IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT = 13,
+        IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR = 14,
+    }
+
+    [Flags]
     internal enum ImageFileCharacteristics : ushort
     {
         IMAGE_FILE_RELOCS_STRIPPED = 0x0001,
@@ -62,23 +82,49 @@ namespace SharpKernelLib.Utils
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public struct IMAGE_DOS_HEADER
+    {
+        public ushort e_magic; // Magic number
+        public ushort e_cblp; // Bytes on last page of file
+        public ushort e_cp; // Pages in file
+        public ushort e_crlc; // Relocations
+        public ushort e_cparhdr; // Size of header in paragraphs
+        public ushort e_minalloc; // Minimum extra paragraphs needed
+        public ushort e_maxalloc; // Maximum extra paragraphs needed
+        public ushort e_ss; // Initial (relative) SS value
+        public ushort e_sp; // Initial SP value
+        public ushort e_csum; // Checksum
+        public ushort e_ip; // Initial IP value
+        public ushort e_cs; // Initial (relative) CS value
+        public ushort e_lfarlc; // File address of relocation table
+        public ushort e_ovno; // Overlay number
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+        public ushort[] e_res1; // Reserved words
+        public ushort e_oemid; // OEM identifier (for e_oeminfo)
+        public ushort e_oeminfo; // OEM information; e_oemid specific
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        public ushort[] e_res2; // Reserved words
+        public int e_lfanew; // File address of new exe header
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     internal struct IMAGE_NT_HEADERS
     {
         public uint Signature;
         public IMAGE_FILE_HEADER FileHeader;
-        public IMAGE_OPTIONAL_HEADER64 OptionalHeader;
+        public IMAGE_OPTIONAL_HEADER64 OptionalHeader; // Only support x64 files
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IMAGE_FILE_HEADER
     {
-        public ushort Machine;
+        public ImageFileMachine Machine;
         public ushort NumberOfSections;
         public uint TimeDateStamp;
         public uint PointerToSymbolTable;
         public uint NumberOfSymbols;
         public ushort SizeOfOptionalHeader;
-        public ushort Characteristics;
+        public ImageFileCharacteristics Characteristics;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -122,6 +168,45 @@ namespace SharpKernelLib.Utils
     {
         public uint VirtualAddress;
         public uint Size;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IMAGE_EXPORT_DIRECTORY
+    {
+        public uint Characteristics;
+        public uint TimeDateStamp;
+        public ushort MajorVersion;
+        public ushort MinorVersion;
+        public uint Name;
+        public uint Base;
+        public uint NumberOfFunctions;
+        public uint NumberOfNames;
+        public uint AddressOfFunctions;
+        public uint AddressOfNames;
+        public uint AddressOfNameOrdinals;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IMAGE_BASE_RELOCATION
+    {
+        public uint VirtualAddress;
+        public uint SizeOfBlock;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IMAGE_SECTION_HEADER
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+        public byte[] Name;
+        public uint PhysicalAddress;
+        public uint VirtualAddress;
+        public uint SizeOfRawData;
+        public uint PointerToRawData;
+        public uint PointerToRelocations;
+        public uint PointerToLinenumbers;
+        public ushort NumberOfRelocations;
+        public ushort NumberOfLinenumbers;
+        public uint Characteristics;
     }
 
     [StructLayout(LayoutKind.Sequential)]
