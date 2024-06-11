@@ -28,15 +28,18 @@ If your anti-virus software keeps flag SharpKernel, please add it to the exclusi
 
 If you really want to bypass the AV flags, obfuscate/pack this library by yourself. (There are a plenty of useful open-source .NET obfuscators out there)
 
-## Potential Purpose of this Library
+## Potential Purpose of this Project
 
-* Learn how an each vulnerable driver can be exploited.
 * Read/Write arbitrary memory addresses on your computor, without any restrictions.
 * Manual map your own kernel mode driver.
 * Temporarly disable DSE(Driver Signature Enforcement) to load your unsigned driver.
 * Terminate/Crash arbitrary processes.
+
+---
+
+* Learn how each vulnerable driver could be exploited.
 * Make your own BYOVD backdoor/rootkit.
-* Nullify KASLR.
+* Nullify KASLR to do more jobs or exploits.
 * Acheive privilege escalation by tampering the process token.
 
 ## Features
@@ -55,6 +58,7 @@ static void Main(string[] args)
     // Initialize the kernel session
     using (var provider = new KernelSession(new IntelNal(), new ProcExpDispatchHandlerHijack()))
     {
+        // Read arbitrary physical memory
         var memoryAccess = provider.GetMemoryAccessor();
         memoryAccess.ReadPhysical((IntPtr)0xDEADBEEF, out byte[] bytes, 0x1000);
         Console.WriteLine(Convert.ToHexString(memoryAccess));

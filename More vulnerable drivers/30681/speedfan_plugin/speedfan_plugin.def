@@ -1,0 +1,3 @@
+LIBRARY 	speedfan_plugin
+EXPORTS		Callback_Direct
+		Callback_Overview
