@@ -12,12 +12,28 @@ using static SharpKernelLib.Utils.NtUndocumented;
 using static Windows.Win32.PInvoke;
 using static Windows.Wdk.PInvoke;
 using Windows.Win32.System.IO;
+using System.IO;
 
 namespace SharpKernelLib.Utils
 {
     // Port of KDU Hamakaze sup.c and sup.h
-    internal unsafe static partial class NtWrapper
+    internal sealed unsafe class PEImage
     {
+        private void* imageBase;
+        private PEImage(void* imageBase) => this.imageBase = imageBase;
+
+        public static PEImage ManualMap(byte[] imageData)
+        {
+        }
+
+        public static PEImage FromMapped(IntPtr imageBase)
+        {
+        }
+
+        public static PEImage LoadDll(string fileName)
+        {
+        }
+
         internal static int GetImageSize(IntPtr imageBase)
         {
             var ntstatus = LdrFindEntryForAddress(imageBase.ToPointer(), out var table);

@@ -1,11 +1,72 @@
-﻿using System;
+﻿using SharpKernelLib.Exception;
+using System;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using Windows.Wdk;
+using Windows.Wdk.System.SystemInformation;
 using Windows.Win32.Foundation;
 
 namespace SharpKernelLib.Utils
 {
+    [Flags]
+    public enum AllocationTypes : uint
+    {
+        MEM_COMMIT = 0x00001000,
+        MEM_RESERVE = 0x00002000,
+        MEM_RESET = 0x00080000,
+        MEM_RESET_UNDO = 0x01000000,
+        MEM_REPLACE_PLACEHOLDER = 0x00004000,
+        MEM_LARGE_PAGES = 0x20000000,
+        MEM_RESERVE_PLACEHOLDER = 0x00040000,
+        MEM_FREE = 0x00010000,
+    }
+
+    [Flags]
+    public enum PageProtections : uint
+    {
+        PAGE_NOACCESS = 0x00000001,
+        PAGE_READONLY = 0x00000002,
+        PAGE_READWRITE = 0x00000004,
+        PAGE_WRITECOPY = 0x00000008,
+        PAGE_EXECUTE = 0x00000010,
+        PAGE_EXECUTE_READ = 0x00000020,
+        PAGE_EXECUTE_READWRITE = 0x00000040,
+        PAGE_EXECUTE_WRITECOPY = 0x00000080,
+        PAGE_GUARD = 0x00000100,
+        PAGE_NOCACHE = 0x00000200,
+        PAGE_WRITECOMBINE = 0x00000400,
+        PAGE_GRAPHICS_NOACCESS = 0x00000800,
+        PAGE_GRAPHICS_READONLY = 0x00001000,
+        PAGE_GRAPHICS_READWRITE = 0x00002000,
+        PAGE_GRAPHICS_EXECUTE = 0x00004000,
+        PAGE_GRAPHICS_EXECUTE_READ = 0x00008000,
+        PAGE_GRAPHICS_EXECUTE_READWRITE = 0x00010000,
+        PAGE_GRAPHICS_COHERENT = 0x00020000,
+        PAGE_GRAPHICS_NOCACHE = 0x00040000,
+        PAGE_ENCLAVE_THREAD_CONTROL = 0x80000000,
+        PAGE_REVERT_TO_FILE_MAP = 0x80000000,
+        PAGE_TARGETS_NO_UPDATE = 0x40000000,
+        PAGE_TARGETS_INVALID = 0x40000000,
+        PAGE_ENCLAVE_UNVALIDATED = 0x20000000,
+        PAGE_ENCLAVE_MASK = 0x10000000,
+        PAGE_ENCLAVE_DECOMMIT = 0x10000000,
+        PAGE_ENCLAVE_SS_FIRST = 0x10000001,
+        PAGE_ENCLAVE_SS_REST = 0x10000002,
+        SEC_PARTITION_OWNER_HANDLE = 0x00040000,
+        SEC_64K_PAGES = 0x00080000,
+        SEC_FILE = 0x00800000,
+        SEC_IMAGE = 0x01000000,
+        SEC_PROTECTED_IMAGE = 0x02000000,
+        SEC_RESERVE = 0x04000000,
+        SEC_COMMIT = 0x08000000,
+        SEC_NOCACHE = 0x10000000,
+        SEC_WRITECOMBINE = 0x40000000,
+        SEC_LARGE_PAGES = 0x80000000,
+        SEC_IMAGE_NO_EXECUTE = 0x11000000,
+    }
+
     /// <summary>
     /// OBJECT_ATTRIBUTES.Attributes field
     /// </summary>
@@ -45,7 +106,7 @@ namespace SharpKernelLib.Utils
     }
 
     [Flags]
-    internal enum AccessMask : uint
+    public enum AccessMask : uint
     {
         DELETE = 0x00010000,
         READ_CONTROL = 0x00020000,
@@ -344,17 +405,46 @@ namespace SharpKernelLib.Utils
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct OBJECT_NAME_INFORMATION
+    internal unsafe struct OBJECT_NAME_INFORMATION
     {
         public UNICODE_STRING Name;
+
+        /// <remarks>Remember to call 'Marshal.FreeHGlobal'</remarks>
+        public static OBJECT_NAME_INFORMATION* QueryData(HANDLE handle) => (OBJECT_NAME_INFORMATION*)NtQueryUtils.QueryObjectInformation(ObjectInformationClass.ObjectNameInformation, handle, out _);
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct RTL_PROCESS_MODULES
+    internal unsafe struct RTL_PROCESS_MODULES
     {
         public uint NumberOfModules;
         [MarshalAs(UnmanagedType.LPArray, SizeConst = 1)]
         public RTL_PROCESS_MODULE_INFORMATION[] Modules;
+
+        /// <remarks>Remember to call 'Marshal.FreeHGlobal'</remarks>
+        public static RTL_PROCESS_MODULES* QueryLoadedSystemModules(bool extended)
+        {
+            var infoClass = (uint)(extended ? SystemInformationClass.SystemModuleInformationEx : SystemInformationClass.SystemModuleInformation);
+            var bufferSize = 0u;
+            var ntstatus = PInvoke.NtQuerySystemInformation((SYSTEM_INFORMATION_CLASS)infoClass, null, 0, &bufferSize);
+            if (ntstatus != (uint)NtStatus.InfoLengthMismatch)
+                throw new NtStatusException(ntstatus);
+
+            var returnLength = 0u;
+            var buffer = (RTL_PROCESS_MODULES*)Marshal.AllocHGlobal((int)bufferSize);
+            ntstatus = PInvoke.NtQuerySystemInformation((SYSTEM_INFORMATION_CLASS)infoClass, buffer, bufferSize, &returnLength);
+
+            // Handle unexpected return (check out  KDU ntsup.c#L810 for more information)
+            if (ntstatus == (uint)NtStatus.BufferOverflow)
+            {
+                if (buffer->NumberOfModules == 0)
+                    throw new NtStatusException(ntstatus);
+            }
+
+            if (!ntstatus.IsSuccess())
+                throw new NtStatusException(ntstatus);
+
+            return buffer;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -374,7 +464,7 @@ namespace SharpKernelLib.Utils
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct SYSTEM_BASIC_INFORMATION
+    internal unsafe struct SYSTEM_BASIC_INFORMATION
     {
         public uint Reserved;
         public uint TimerResolution;
@@ -387,14 +477,36 @@ namespace SharpKernelLib.Utils
         public UIntPtr MaximumUserModeAddress;
         public UIntPtr ActiveProcessorsAffinityMask;
         public char NumberOfProcessors;
+
+        public static SYSTEM_BASIC_INFORMATION QueryData()
+        {
+            var returnLength = 0u;
+            var info = new SYSTEM_BASIC_INFORMATION();
+            var ntstatus = PInvoke.NtQuerySystemInformation((SYSTEM_INFORMATION_CLASS)SystemInformationClass.SystemBasicInformation, &info, (uint)sizeof(SYSTEM_BASIC_INFORMATION), ref returnLength);
+            if (!ntstatus.IsSuccess())
+                throw new NtStatusException(ntstatus);
+
+            return info;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct SYSTEM_BOOT_ENVIRONMENT_INFORMATION
+    internal unsafe struct SYSTEM_BOOT_ENVIRONMENT_INFORMATION
     {
         public Guid BootIdentifier;
         public FirmwareType FirmwareType;
         public ulong BootFlags;
+
+        public static SYSTEM_BOOT_ENVIRONMENT_INFORMATION QueryData()
+        {
+            var returnLength = 0u;
+            var info = new SYSTEM_BOOT_ENVIRONMENT_INFORMATION();
+            var ntstatus = PInvoke.NtQuerySystemInformation((SYSTEM_INFORMATION_CLASS)SystemInformationClass.SystemBootEnvironmentInformation, &info, (uint)sizeof(SYSTEM_BOOT_ENVIRONMENT_INFORMATION), ref returnLength);
+            if (!ntstatus.IsSuccess())
+                throw new NtStatusException(ntstatus);
+
+            return info;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]

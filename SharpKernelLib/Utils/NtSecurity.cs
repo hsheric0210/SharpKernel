@@ -18,14 +18,14 @@ using Windows.Win32.Security;
 namespace SharpKernelLib.Utils
 {
     // Port of KDU Hamakaze sup.c and sup.h
-    internal unsafe static partial class NtWrapper
+    internal unsafe static class NtSecurity
     {
         internal const uint ACL_REVISION = 2u;
         internal const uint SECURITY_DESCRIPTOR_REVISION = 1u;
         internal const uint SECURITY_DESCRIPTOR_REVISION1 = 1u;
         internal static readonly SID_IDENTIFIER_AUTHORITY SECURITY_NT_AUTHORITY;
 
-        static NtWrapper()
+        static NtSecurity()
         {
             SECURITY_NT_AUTHORITY = new SID_IDENTIFIER_AUTHORITY();
             SECURITY_NT_AUTHORITY.Value[0] = 0;

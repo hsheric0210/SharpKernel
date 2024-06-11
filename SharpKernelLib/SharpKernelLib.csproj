@@ -6,8 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UndocumentedPInvoke\**" />
+    <EmbeddedResource Remove="UndocumentedPInvoke\**" />
+    <None Remove="UndocumentedPInvoke\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DriverFiles\" />
-    <Folder Include="UndocumentedPInvoke\" />
   </ItemGroup>
 
   <ItemGroup>

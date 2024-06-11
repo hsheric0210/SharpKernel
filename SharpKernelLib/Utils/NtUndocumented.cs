@@ -46,7 +46,7 @@ namespace SharpKernelLib.Utils
 
         [DllImport("ntdll.dll", ExactSpelling = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
-        internal static extern NTSTATUS NtMapViewOfSection([In] HANDLE SectionHandle, [In] HANDLE ProcessHandle, [In, Out] void** BaseAddress, [In] uint* ZeroBits, [In] UIntPtr commitSize, [In, Out, Optional] ulong* SectionOffset, [In, Out, Optional] UIntPtr* ViewSize, [In] SECTION_INHERIT InheritDisposition, VIRTUAL_ALLOCATION_TYPE allocationType, PAGE_PROTECTION_FLAGS win32Protect);
+        internal static extern NTSTATUS NtMapViewOfSection([In] HANDLE SectionHandle, [In] HANDLE ProcessHandle, [In, Out] void** BaseAddress, [In] uint* ZeroBits, [In] UIntPtr commitSize, [In, Out, Optional] ulong* SectionOffset, [In, Out, Optional] UIntPtr* ViewSize, [In] SECTION_INHERIT InheritDisposition, AllocationTypes allocationType, PageProtections win32Protect);
 
         [DllImport("ntdll.dll", ExactSpelling = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
