@@ -1,11 +1,11 @@
 ﻿using System;
 using SharpKernelLib.SessionProviders;
 
-namespace SharpKernelLib.RemoteCodeExecution
+namespace SharpKernelLib.KernelCodeExecution
 {
-    public class ZemanaAM_CVE2021_31728
+    public class CheatEngineDbk
     {
-        // Use Zemana AntiMalware zam64.sys CVE-2021-31728 (from KDU)
+        // Use Cheat Engine DBK driver's IOCTL_EXECUTE_CODE (from KDU)
         public bool IsSupported(IProvider provider) => throw new NotImplementedException();
     }
 }

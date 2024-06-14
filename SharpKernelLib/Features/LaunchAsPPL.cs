@@ -1,6 +1,6 @@
 ﻿namespace SharpKernelLib.Features
 {
-    public class SpawnSystemShell
+    public class LaunchAsPPL
     {
     }
 }

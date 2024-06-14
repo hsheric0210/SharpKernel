@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-using static SharpKernelLib.Utils.NtWrapper;
+using static SharpKernelLib.Utils.NtConstants;
 
 namespace SharpKernelLib.Utils
 {
@@ -24,7 +24,7 @@ namespace SharpKernelLib.Utils
             var cr3Value = IntPtr.Zero;
 
             // Prevent access violation crash
-            VEHTryCatch(
+            GlobalVEH.TryCatch(
                 () =>
                 {
                     // TODO: parallel search using 'Parallel.For'

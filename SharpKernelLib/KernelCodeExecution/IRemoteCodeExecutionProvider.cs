@@ -1,6 +1,6 @@
 ﻿using SharpKernelLib.SessionProviders;
 
-namespace SharpKernelLib.RemoteCodeExecution
+namespace SharpKernelLib.KernelCodeExecution
 {
     public interface IRemoteCodeExecutionProvider
     {

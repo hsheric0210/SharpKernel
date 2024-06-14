@@ -8,8 +8,8 @@ using SharpKernelLib.Exception;
 using Windows.Win32.Storage.FileSystem;
 using Windows.Wdk.Storage.FileSystem;
 
+using static SharpKernelLib.Utils.NtConstants;
 using static SharpKernelLib.Utils.NtUndocumented;
-using static SharpKernelLib.Utils.NtWrapper;
 using static Windows.Win32.PInvoke;
 using static Windows.Wdk.PInvoke;
 
@@ -73,20 +73,9 @@ namespace SharpKernelLib.Utils
             var found = false;
             do
             {
-                ntstatus = NtQueryDirectoryObject(directoryHandle, null, 0, true, false, ref context, out var requiredBufferSize);
-                if (ntstatus != (uint)NtStatus.BufferTooSmall)
-                    throw new SessionInitializationException("IsObjectExists#NtQueryDirectoryObject(BufSize)", new NtStatusException(ntstatus));
-
-                var buffer = Marshal.AllocHGlobal(requiredBufferSize);
-                ntstatus = NtQueryDirectoryObject(directoryHandle, (OBJECT_DIRECTORY_INFORMATION*)buffer.ToPointer(), (uint)requiredBufferSize, true, false, ref context, out requiredBufferSize);
-                if (!ntstatus.IsSuccess())
-                {
-                    Marshal.FreeHGlobal(buffer);
-                    throw new SessionInitializationException("IsObjectExists#NtQueryDirectoryObject(Data)", new NtStatusException(ntstatus));
-                }
-
-                var dirName = ((OBJECT_DIRECTORY_INFORMATION*)buffer)->Name;
-                Marshal.FreeHGlobal(buffer);
+                var buffer = OBJECT_DIRECTORY_INFORMATION.QueryData(directoryHandle, ref context);
+                var dirName = buffer->Name;
+                Marshal.FreeHGlobal((IntPtr)buffer);
                 if (RtlEqualUnicodeString(dirName, objectNameU, true))
                 {
                     found = true;
@@ -118,7 +107,7 @@ namespace SharpKernelLib.Utils
             {
                 // Retry if the buffer size is insufficient
                 Marshal.FreeHGlobal(buffer);
-                bufferSize <<= 1; // Double the buffer
+                bufferSize <<= 1; // Double the buffer size
                 if (bufferSize > NTQSI_MAX_BUFFER_LENGTH)
                     throw new OutOfMemoryException();
 
@@ -218,5 +207,31 @@ namespace SharpKernelLib.Utils
         }
 
         internal static FirmwareType GetFirmwareType() => SYSTEM_BOOT_ENVIRONMENT_INFORMATION.QueryData().FirmwareType;
+
+        internal static uint ChooseNonPagedPoolTag()
+        {
+            var info = SYSTEM_POOLTAG_INFORMATION.QueryData();
+            var tag = 0x20206f49u; // '  oI'
+            var maxUse = 0ul;
+
+            try
+            {
+                for (uint i = 0, j = info->Count; i < j; i++)
+                {
+                    var pool = info->TagInfo[i];
+                    if (pool.NonPagedUsed.ToUInt64() > maxUse)
+                    {
+                        maxUse = pool.NonPagedUsed.ToUInt64();
+                        tag = pool.Tag;
+                    }
+                }
+            }
+            finally
+            {
+                Marshal.FreeHGlobal((IntPtr)info);
+            }
+
+            return tag;
+        }
     }
 }

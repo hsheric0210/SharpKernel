@@ -3,10 +3,11 @@
 namespace SharpKernelLib.Features
 {
     /// <summary>
-    /// Control the DSE(Driver Signature Enforcement) feature by tampering 'ci.dll!g_CiOptions' (or 'ntoskrnl!g_CiEnabled') value.
+    /// Map a driver to the kernel memory.
     /// </summary>
-    public class DSEOverwriter : IDisposable
+    public class CallbackDisabler : IDisposable
     {
+        // EDRSandblast
         private bool disposedValue;
 
         protected virtual void Dispose(bool disposing)
@@ -25,7 +26,7 @@ namespace SharpKernelLib.Features
         }
 
         // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~DSEOverwriter()
+        // ~CallbackDisabler()
         // {
         //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         //     Dispose(disposing: false);

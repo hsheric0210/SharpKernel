@@ -6,7 +6,7 @@ using System.Text;
 using Windows.Wdk.Foundation;
 using Windows.Win32.Foundation;
 
-using static SharpKernelLib.Utils.NtWrapper;
+using static SharpKernelLib.Utils.NtConstants;
 using static SharpKernelLib.Utils.NtUndocumented;
 using static Windows.Win32.PInvoke;
 using static Windows.Wdk.PInvoke;
@@ -51,11 +51,11 @@ namespace SharpKernelLib.Utils
                     throw new MemoryAccessException("DuplicatePhysicalMemoryHandle#NtOpenSection", new NtStatusException(ntstatus));
 
                 // Marshal manually because .NET marshaller doesn't support dynamic array
-                handleInfo = (SYSTEM_HANDLE_INFORMATION_EX*)NtQueryUtils.GetNtSystemInfo(SystemInformationClass.SystemExtendedHandleInformation, out _);
+                handleInfo = SYSTEM_HANDLE_INFORMATION_EX.QueryData();
 
                 var currentProcessId = GetCurrentProcessId();
 
-                var sectionObjectType = ALL_1_UINT;
+                var sectionObjectType = MINUS_1_UINT;
                 for (ulong i = 0u, j = handleInfo->NumberOfHandles.ToUInt64(); i < j; i++)
                 {
                     var handle = handleInfo->Handles[i];
@@ -65,7 +65,8 @@ namespace SharpKernelLib.Utils
                         break;
                     }
                 }
-                if (sectionObjectType == ALL_1_UINT)
+
+                if (sectionObjectType == MINUS_1_UINT)
                     throw new MemoryNotFoundException("Can't find the object type index of 'Section' type.");
 
                 NtClose(sectionHandle);
@@ -185,12 +186,9 @@ namespace SharpKernelLib.Utils
                 var offset = (ulong)BaseAddress.ToInt64() & ~(PAGE_SIZE - 1);
 
                 // Prevent access violation crash
-                VEHTryCatch(
+                ThreadLocalVEH.TryCatch(
                     () => Marshal.Copy(BaseAddress.Add(offset), buffer, startIndex, length),
-                    (ExceptionRecord _) =>
-                    {
-                        //ignore
-                    }
+                    (ExceptionRecord record) => throw new MemoryAccessException($"Exception {record.ExceptionCode} occurred while reading {BaseAddress}")
                 );
             }
 
@@ -206,12 +204,9 @@ namespace SharpKernelLib.Utils
                 var offset = (ulong)BaseAddress.ToInt64() & ~(PAGE_SIZE - 1);
 
                 // Prevent access violation crash
-                VEHTryCatch(
+                ThreadLocalVEH.TryCatch(
                     () => Marshal.Copy(buffer, startIndex, BaseAddress.Add(offset), length),
-                    (ExceptionRecord _) =>
-                    {
-                        //ignore
-                    }
+                    (ExceptionRecord record) => throw new MemoryAccessException($"Exception {record.ExceptionCode} occurred while writing {BaseAddress}")
                 );
             }
 

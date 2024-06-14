@@ -17,13 +17,13 @@ using System.Threading;
 namespace SharpKernelLib.Utils
 {
     // Port of KDU Hamakaze sup.c and sup.h
-    internal unsafe static partial class NtWrapper
+    internal unsafe static class ThreadLocalVEH
     {
         private static ThreadLocal<bool> handleVectoredExceptions = new ThreadLocal<bool>(() => false);
         private static ThreadLocal<bool> caughtVectoredException = new ThreadLocal<bool>(() => false);
         private static ThreadLocal<ExceptionRecord> lastVectoredException = new ThreadLocal<ExceptionRecord>(() => default);
 
-        private static int VEHTryCatchHandler(ref ExceptionPointers exceptionPointers)
+        private static int Handler(ref ExceptionPointers exceptionPointers)
         {
             if (!handleVectoredExceptions.Value)
                 return 0; // EXCEPTION_CONTINUE_SEARCH
@@ -33,37 +33,43 @@ namespace SharpKernelLib.Utils
             return 1; // EXCEPTION_CONTINUE_EXECUTION
         }
 
-        internal static void VEHTryCatch(Action tryBlock, Action<ExceptionRecord> catchBlock) => VEHTryCatchFinally(tryBlock, catchBlock, () => { });
+        internal static void TryCatch(Action tryBlock, Action<ExceptionRecord> catchBlock) => TryCatchFinally(tryBlock, catchBlock, () => { });
 
-        internal static void VEHTryCatchFinally(Action tryBlock, Action<ExceptionRecord> catchBlock, Action finallyBlock)
+        internal static void TryCatchFinally(Action tryBlock, Action<ExceptionRecord> catchBlock, Action finallyBlock)
         {
             // Register
-            var veh = AddVectoredExceptionHandler(1, VEHTryCatchHandler);
+            var veh = AddVectoredExceptionHandler(1, Handler);
 
             // Pre init
             handleVectoredExceptions.Value = true;
             caughtVectoredException.Value = false;
             lastVectoredException.Value = default;
 
-            // Try
-            tryBlock();
+            try // In case of C# exception
+            {
+                // Try
+                tryBlock();
 
-            handleVectoredExceptions.Value = false;
+                handleVectoredExceptions.Value = false;
 
-            // Catch
-            if (caughtVectoredException.Value)
-                catchBlock(lastVectoredException.Value);
+                // Catch
+                if (caughtVectoredException.Value)
+                    catchBlock(lastVectoredException.Value);
+            }
+            finally
+            {
+                // Always cleanup
 
-            // Finally
+                finallyBlock();
 
-            finallyBlock();
+                // Post cleanup
+                handleVectoredExceptions.Value = false;
+                caughtVectoredException.Value = false;
+                lastVectoredException.Value = default;
 
-            // Post cleanup
-            caughtVectoredException.Value = false;
-            lastVectoredException.Value = default;
-
-            // Unregister
-            RemoveVectoredExceptionHandler(veh.ToPointer());
+                // Unregister
+                RemoveVectoredExceptionHandler(veh.ToPointer());
+            }
         }
     }
 }

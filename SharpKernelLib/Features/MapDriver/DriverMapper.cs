@@ -1,4 +1,4 @@
-﻿namespace SharpKernelLib.Features
+﻿namespace SharpKernelLib.Features.MapDriver
 {
     /// <summary>
     /// Map a driver to the kernel memory.

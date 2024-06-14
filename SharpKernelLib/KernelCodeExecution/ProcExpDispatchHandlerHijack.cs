@@ -1,7 +1,7 @@
 ﻿using System;
 using SharpKernelLib.SessionProviders;
 
-namespace SharpKernelLib.RemoteCodeExecution
+namespace SharpKernelLib.KernelCodeExecution
 {
     public class ProcExpDispatchHandlerHijack : IRemoteCodeExecutionProvider
     {

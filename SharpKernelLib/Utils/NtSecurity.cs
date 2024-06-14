@@ -101,7 +101,7 @@ namespace SharpKernelLib.Utils
 
                 RtlInitializeSid(sid, SECURITY_NT_AUTHORITY, 2);
                 *RtlSubAuthoritySid(sid, 0) = (uint)SecurityRID.SECURITY_BUILTIN_DOMAIN_RID;
-                *RtlSubAuthoritySid(sid, 0) = (uint)SecurityRID.DOMAIN_ALIAS_RID_ADMINS;
+                *RtlSubAuthoritySid(sid, 1) = (uint)SecurityRID.DOMAIN_ALIAS_RID_ADMINS;
                 RtlAddAccessAllowedAce(acl, ACL_REVISION, (uint)AccessMask.GENERIC_ALL, sid);
 
                 ntstatus = RtlCreateSecurityDescriptor(securityDescriptor, SECURITY_DESCRIPTOR_REVISION1);

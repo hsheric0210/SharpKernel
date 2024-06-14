@@ -1,9 +1,9 @@
 ﻿using System;
 using SharpKernelLib.SessionProviders;
 
-namespace SharpKernelLib.RemoteCodeExecution
+namespace SharpKernelLib.KernelCodeExecution
 {
-    public class KernelFunctionHook : IRemoteCodeExecutionProvider
+    public class KernelFunctionInlineHook : IRemoteCodeExecutionProvider
     {
         // Code Execution by hooking random kernel functions (KDMapper style)
         // A bit unsafe because uses timing-attack(install hook; use; then remove it fast as possible) to bypass PatchGuard but most simple
