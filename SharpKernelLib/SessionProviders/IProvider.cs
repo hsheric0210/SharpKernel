@@ -19,13 +19,14 @@ namespace SharpKernelLib.SessionProviders
         IProcessAccessProvider ProcessAccess { get; }
 
         bool IsSupported();
-        bool StartVulnerableDriver();
-        bool StopVulnerableDriver();
 
         bool RegisterDriverCallback();
         bool UnregisterDriverCallback();
         bool PreOpenDriverCallback();
         bool PostOpenDriverCallback();
+
+        void StartVulnerableDriver();
+        void StopVulnerableDriver();
     }
 
     public interface IMemoryAccessProvider

@@ -146,7 +146,7 @@ namespace SharpKernelLib.KernelCodeExecution.Shellcode
             return Math.Max(offset, align);
         }
 
-        public KernelFunctionCallStub(IntPtr functionAddress, Type[] parameters, int structAlignmentBytes = 16)
+        public KernelFunctionCallStub(IntPtr functionAddress, Type[] parameters, Type returnType, int structAlignmentBytes = 16)
         {
             var align = structAlignmentBytes / 8;
 
@@ -199,6 +199,22 @@ namespace SharpKernelLib.KernelCodeExecution.Shellcode
 
             // Call the function
             shellcode.AddRange(new byte[] { 0xFF, 0xD0 }); // call rax
+
+            switch (MapParameterType(returnType))
+            {
+                case ParamType.I1:
+                    shellcode.AddRange(new byte[] { 0x0F, 0xB6, 0xC0 }); // movzx eax, al
+                    break;
+                case ParamType.I2:
+                    shellcode.AddRange(new byte[] { 0x0F, 0xB7, 0xC0 }); // movzx eax, ax
+                    break;
+                case ParamType.I4:
+                    // No conversion needed, as lower 32 bits of RAX are already in EAX
+                    break;
+                case ParamType.I8:
+                    // No conversion needed, as full 64 bits of RAX are used
+                    break;
+            }
 
             // Restore the stack pointer if stack space was allocated
             shellcode.AddRange(new byte[] { 0x48, 0x81, 0xC4 });

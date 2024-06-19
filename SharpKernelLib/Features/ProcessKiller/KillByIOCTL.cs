@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharpKernelLib.Features.MapDriver
+namespace SharpKernelLib.Features.ProcessKiller
 {
-    public interface IMapDriverMethod
+    public class KillByIoctl
     {
     }
 }

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharpKernelLib.Features.MapDriver
+namespace SharpKernelLib.Features.DriverMapper
 {
     /// <summary>
     /// KDU V3 provider
     /// </summary>
-    public class ManualBuildDriverObject : IMapDriverMethod
+    public class MapWithDriverObject : IDriverMapper
     {
     }
 }

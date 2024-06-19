@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharpKernelLib.Features.KillProcess
+namespace SharpKernelLib.Features.ProcessKiller
 {
-    public interface IKillProcessMethod
+    public interface IProcessKiller
     {
     }
 }

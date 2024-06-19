@@ -9,7 +9,7 @@ namespace SharpKernelLib.SessionProviders
 {
     public abstract class ProviderBase : IProvider
     {
-        private HANDLE deviceHandle;
+        private DriverSession driverSession;
         private IMemoryAccessProvider memoryProvider;
         private IProcessAccessProvider processProvider;
 
@@ -29,25 +29,32 @@ namespace SharpKernelLib.SessionProviders
         {
         }
 
+        /* Provider-specific callbacks (return true to continue; false to abort) */
+
         public virtual bool IsSupported() => true;
         public virtual bool PreOpenDriverCallback() => true;
         public virtual bool PostOpenDriverCallback() => true;
         public virtual bool RegisterDriverCallback() => true;
         public virtual bool UnregisterDriverCallback() => true;
+
+        /* Base implementation */
+
         public virtual void StartVulnerableDriver()
         {
             if (IsProviderAlreadyLoaded())
                 return;
 
-            var driverPath = $"{Environment.CurrentDirectory}\\{DriverName}.sys"; // TODO: Name randomization?
+            // TODO: Driver file name name randomization
+            // TODO: Extract on Temp folder, instead of current folder
+            var driverPath = $"{Environment.CurrentDirectory}\\{DriverName}.sys";
             File.WriteAllBytes(driverPath, GetDriverData());
 
-            LoadDriver(DriverName, driverPath, false);
+            DriverLoaderUtils.LoadDriver(DriverName, driverPath, false);
 
             if (!PreOpenDriverCallback())
                 return;
 
-            deviceHandle = OpenDriver(DeviceName, AccessMask.SYNCHRONIZE | AccessMask.WRITE_DAC | AccessMask.GENERIC_WRITE | AccessMask.GENERIC_READ);
+            driverSession = DriverSession.Open(DeviceName, AccessMask.SYNCHRONIZE | AccessMask.WRITE_DAC | AccessMask.GENERIC_WRITE | AccessMask.GENERIC_READ);
 
             if (!PostOpenDriverCallback())
                 return;
@@ -60,11 +67,11 @@ namespace SharpKernelLib.SessionProviders
 
         }
 
-        public virtual IMemoryAccessProvider CreateMemoryAccessProvider() => new EmptyMemoryAccessProvider();
+        protected virtual IMemoryAccessProvider CreateMemoryAccessProvider() => new EmptyMemoryAccessProvider();
 
-        public virtual IProcessAccessProvider CreateProcessAccessProvider() => new EmptyProcessAccessProvider();
+        protected virtual IProcessAccessProvider CreateProcessAccessProvider() => new EmptyProcessAccessProvider();
 
-        protected virtual bool IsProviderAlreadyLoaded() => IsObjectExists("\\Device", DeviceName);
+        protected virtual bool IsProviderAlreadyLoaded() => NtQueryUtils.IsObjectExists("\\Device", DeviceName);
 
         protected abstract byte[] GetDriverData();
     }

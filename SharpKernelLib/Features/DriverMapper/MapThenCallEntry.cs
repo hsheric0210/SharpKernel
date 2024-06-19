@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharpKernelLib.Features.MapDriver
+namespace SharpKernelLib.Features.DriverMapper
 {
 
     /// <summary>
     /// KDMapper's method
     /// </summary>
-    public class SimpleCallDriverEntry : IMapDriverMethod
+    public class MapThenCallEntry : IDriverMapper
     {
     }
 }

@@ -30,17 +30,25 @@ If you really want to bypass the AV flags, obfuscate/pack this library by yourse
 
 ## Potential Purpose of this Project
 
-* Read/Write arbitrary memory addresses on your computor, without any restrictions.
-* Manual map your own kernel mode driver.
-* Temporarly disable DSE(Driver Signature Enforcement) to load your unsigned driver.
-* Terminate/Crash arbitrary processes.
+Integrated features:
 
----
+* IMemoryAccessProvider: Read/Write arbitrary memory addresses on your computor, without any restrictions.
+* DriverMapper: Manual map your own kernel mode driver.
+* DseOverwriter: Temporarly disable DSE(Driver Signature Enforcement) to load your unsigned driver.
+* DriverTraceCleaner: Clean up all traces that can be used to track if the vulnerable driver is loaded before. (e.g. PiDDBCacheTable)
+* KillProcess: Terminate arbitrary processes, even a protected one.
+* PPLLauncher: Launch a program as PPL(ProtectedProcess-Light) right.
+* CallbackDisabler: Temporarily disable/unregister ALL kernel-mode callbacks (ObRegisterCallbacks, PsSetCreateProcessNotifyRoutine, and more) to execute your code without being restricted/blocked by anti-things (e.g. anti-malwares, anti-cheats).
+
+Can be utilized to:
 
 * Learn how each vulnerable driver could be exploited.
-* Make your own BYOVD backdoor/rootkit.
+* Make/test your own BYOVD backdoor/rootkit.
 * Nullify KASLR to do more jobs or exploits.
-* Acheive privilege escalation by tampering the process token.
+* Achieve privilege escalation by tampering the process token. (typical Privilege Escalation)
+* Crash your system.
+* Run some shellcode in kernel-mode.
+* Inject your own code/driver to kernel-mode and bypass some kernel-mode rootkits/shitwares (a.k.a. "anti-cheats").
 
 ## Features
 
@@ -66,12 +74,4 @@ static void Main(string[] args)
 }
 ```
 
-## Supported Vulnerable Driver
-
-### Ported from KDU:
-
-* Intel Nal (iqvw64e.sys - CVE-2015-2291)
-
-### Ported from KDMapper:
-
-* Intel Nal (iqvw64e.sys - CVE-2015-2291)
+## [Supported Vulnerable Driver List](provider-list.md)

@@ -23,6 +23,7 @@ namespace SharpKernelLib
             RceProvider = rceProvider;
         }
 
-        public IMemoryAccessProvider GetMemoryAccessor() => Provider.GetMemoryAccessor();
+        public IMemoryAccessProvider MemoryAccess => Provider.MemoryAccess;
+        public IProcessAccessProvider ProcessAccess => Provider.ProcessAccess;
     }
 }

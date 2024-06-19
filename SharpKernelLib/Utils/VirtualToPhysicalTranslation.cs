@@ -8,14 +8,14 @@ using static SharpKernelLib.Utils.NtConstants;
 
 namespace SharpKernelLib.Utils
 {
-    public sealed unsafe class PageWalkVirtualToPhysical
+    public sealed unsafe class VirtualToPhysicalTranslation
     {
-        public PageWalkVirtualToPhysical(IntPtr pml4Value)
+        public VirtualToPhysicalTranslation(IntPtr pml4Value)
         {
 
         }
 
-        public static PageWalkVirtualToPhysical FindPML4AndCreate(IntPtr lowStub1M)
+        public static VirtualToPhysicalTranslation FindPML4AndCreate(IntPtr lowStub1M)
         {
             var offset = 0;
             var lmTargetOffset = Marshal.OffsetOf<PROCESSOR_START_BLOCK>("LmTarget");
@@ -59,7 +59,7 @@ namespace SharpKernelLib.Utils
             if (cr3Value == IntPtr.Zero)
                 throw new MemoryAccessException("PML4 value not found.");
 
-            return new PageWalkVirtualToPhysical(cr3Value);
+            return new VirtualToPhysicalTranslation(cr3Value);
         }
     }
 }
