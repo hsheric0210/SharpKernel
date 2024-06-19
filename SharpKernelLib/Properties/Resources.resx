@@ -160,8 +160,8 @@
   <data name="DbUtil2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\dbutildrv2.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="DbUtil23" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\DriverFiles\DbUtil2_3.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="DbUtil_2_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\DbUtil_2_3.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="DirectIo64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\DirectIo64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -169,14 +169,14 @@
   <data name="EchoDriver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\echo_driver.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ene" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\ene.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="EneIo64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\EneIo64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="EneTechIo64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\EneTechIo64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="EneTechIo64B" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\DriverFiles\ene2.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="EVGA_Eleetx1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\eleetx1.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -187,8 +187,8 @@
   <data name="GLCKIO2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\GLCKIO2.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Gmerdrv" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\DriverFiles\gmerdrv.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="gmer64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\gmer64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="HP_Etdsupp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\etdsupp.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -217,8 +217,8 @@
   <data name="KRegExp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\KRegExp.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="LDD" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\DriverFiles\LDD.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="LenovoDiagnosticsDriver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\LenovoDiagnosticsDriver.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Lha" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\lha.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -228,9 +228,6 @@
   </data>
   <data name="MsIo64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\MsIo64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MSI_WinIo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\DriverFiles\heavenluo.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Nvoclock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\nvoclock.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -270,6 +267,9 @@
   </data>
   <data name="SysDrv3S" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\SysDrv3S.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WinIo64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\DriverFiles\WinIo64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="WinRing0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\DriverFiles\WinRing0x64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

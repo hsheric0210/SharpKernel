@@ -193,9 +193,9 @@ namespace SharpKernelLib.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] DbUtil2 {
+        internal static byte[] DbUtil_2_3 {
             get {
-                object obj = ResourceManager.GetObject("DbUtil2", resourceCulture);
+                object obj = ResourceManager.GetObject("DbUtil_2_3", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -203,9 +203,9 @@ namespace SharpKernelLib.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] DbUtil23 {
+        internal static byte[] DbUtil2 {
             get {
-                object obj = ResourceManager.GetObject("DbUtil23", resourceCulture);
+                object obj = ResourceManager.GetObject("DbUtil2", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -233,6 +233,16 @@ namespace SharpKernelLib.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] ene {
+            get {
+                object obj = ResourceManager.GetObject("ene", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] EneIo64 {
             get {
                 object obj = ResourceManager.GetObject("EneIo64", resourceCulture);
@@ -246,16 +256,6 @@ namespace SharpKernelLib.Properties {
         internal static byte[] EneTechIo64 {
             get {
                 object obj = ResourceManager.GetObject("EneTechIo64", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] EneTechIo64B {
-            get {
-                object obj = ResourceManager.GetObject("EneTechIo64B", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -293,9 +293,9 @@ namespace SharpKernelLib.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Gmerdrv {
+        internal static byte[] gmer64 {
             get {
-                object obj = ResourceManager.GetObject("Gmerdrv", resourceCulture);
+                object obj = ResourceManager.GetObject("gmer64", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -393,9 +393,9 @@ namespace SharpKernelLib.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] LDD {
+        internal static byte[] LenovoDiagnosticsDriver {
             get {
-                object obj = ResourceManager.GetObject("LDD", resourceCulture);
+                object obj = ResourceManager.GetObject("LenovoDiagnosticsDriver", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -416,16 +416,6 @@ namespace SharpKernelLib.Properties {
         internal static byte[] Mimikatz_Mimidrv {
             get {
                 object obj = ResourceManager.GetObject("Mimikatz_Mimidrv", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] MSI_WinIo {
-            get {
-                object obj = ResourceManager.GetObject("MSI_WinIo", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -566,6 +556,16 @@ namespace SharpKernelLib.Properties {
         internal static byte[] SysDrv3S {
             get {
                 object obj = ResourceManager.GetObject("SysDrv3S", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] WinIo64 {
+            get {
+                object obj = ResourceManager.GetObject("WinIo64", resourceCulture);
                 return ((byte[])(obj));
             }
         }
