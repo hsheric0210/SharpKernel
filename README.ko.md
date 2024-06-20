@@ -14,7 +14,7 @@
 
 ## 알림
 
-1. 비록 이 프로젝트는 교육용, 실험적인 목적이지만, 그 외 어떤 용도로 사용하든 상관 없습니다. (루트킷 개발, 핵 개발 등) 단 명심하세요, 이에 따른 결과는 전혀 책임지지 않습니다.
+1. 비록 이 프로젝트는 교육 목적으로 제작되었지만, 그 외 어떤 용도로 사용하든 상관 없습니다. (루트킷 개발, 핵 개발 등) 단 명심하세요, 이에 따른 결과는 전혀 책임지지 않습니다.
 
 2. 몇몇 제공자 또는 기능들은 OS 버전, HVCI 활성화 여부, MSDBL 활성화 여부와 같은 여러 요인들에 의해 작동하지 않을 수도 있습니다.
 
@@ -22,11 +22,11 @@
 
 4. 이 프로젝트의 실행 파일 및 DLL 파일들은 NuGet이나 GitHub의 Release 탭과 같은 그 어느 곳에도 업로드되지 않을 예정입니다. 왜냐하면 업로드 즉시 위험한 파일로 진단되어 삭제되거나, GitHub 프로젝트 사이트 자체가 위험한 사이트로 분류되어 버릴 가능성이 있기 때문입니다.
 
-5. 대부분의 코드 구조는 [hfiref0x](https://github.com/hfiref0x) 님의 [KDU](https://github.com/hfiref0x/KDU) 프로젝트에 기반을 두고 있습니다. 제가 한 일은 코드를 C#으로 포팅하고, 몇몇 제공자를 추가하고, 몇몇 기능을 추가한 것 외에는 없습니다. 이 견고하고 안전한 코드베이스를 만들어주신 [hfiref0x](https://github.com/hfiref0x)님께 진심으로 감사드립니다.
+5. 대부분의 코드 구조는 [hfiref0x](https://github.com/hfiref0x) 님의 [KDU](https://github.com/hfiref0x/KDU) 프로젝트에 기반을 두고 있습니다. 제가 한 일은 코드를 C#으로 포팅하고, 몇몇 제공자를 추가하고, 몇몇 기능을 추가한 것 외에는 없습니다. [hfiref0x](https://github.com/hfiref0x)님께 진심으로 감사드립니다.
 
 ## 안티바이러스 오진
 
-이 프로젝트는 사실상 최근 증가하는 BYOVD 공격 (Bring Your Own Vulnerable Driver 공격)과 크게 다르지 않은 구조를 띠고 있습니다. BYOVD 공격에 대한 설명은 [이 기사](https://company.ahnlab.com/kr/news/press_release_view.do?seqPressRelease=6166)를 참고하세요.
+이 프로젝트는 사실상 최근 증가하는 BYOVD 공격 (Bring Your Own Vulnerable Driver 공격)과 크게 다르지 않은 구조를 띠고 있습니다. (BYOVD 공격에 대한 설명은 [이 기사](https://company.ahnlab.com/kr/news/press_release_view.do?seqPressRelease=6166)를 참고하세요.)
 
 때문에, 많은 안티바이러스 프로그램들이 이 라이브러리를 악성으로 진단하고, 삭제하려 들 것입니다.
 
@@ -58,7 +58,7 @@
 
 * CallbackDisabler: 일시적으로 모든 커널 모드 콜백 기능들을 비활성화합니다. (예시: ObRegisterCallbacks, PsSetCreateProcessNotifyRoutine 등) 안티바이러스와 같은 보안 프로그램들의 제약을 받지 않고 마음껏 코드를 실행할 수 있습니다.
 
-* DriverTraceCleaner: 취약한 드라이버가 로드되었던 흔적을 커널 상에서 지웁니다. KDMapper의 기능에서 옮겨왔습니다. (e.g. PiDDBCacheTable 비우기)
+* DriverTraceCleaner: 취약한 드라이버가 로드되었던 흔적을 커널 상에서 지웁니다. KDMapper의 기능에서 옮겨왔습니다. (예시: PiDDBCacheTable 비우기)
 
 * DseOverwriter: 일시적으로 DSE(드라이버 서명 검증) 기능을 수정 또는 비활성화시켜 서명되지 않은 드라이버도 로드할 수 있는 상태로 만들 수 있습니다.
 
@@ -67,7 +67,7 @@
 이 기능들을 활용하면, 다음과 같은 것들도 가능합니다:
 
 * 각 취약한 드라이버들이 어떻게 악용되는지 알아보기.
-* 자작 백도어나 루트킷을 제작, 테스트해 보기.
+* 자작 백도어나 루트킷을 제작, 테스트하기.
 * KASLR 무력화하기.
 * 임의 프로세스의 권한 상승시키기.
 * 블루스크린 띄우기.

@@ -2,71 +2,70 @@
 
 ## Kernel memory access
 
-|FileName|Name|Assigned CVE|Source Base|Physical Memory R/W|Virtual Memory R/W|MSR R/W|Original Source Available In|
-|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-|iqvw64.sys|Intel Network Adapter Diagnostic Driver|CVE-2015-2291||O|O||[KDU], [KDMapper]|
-|RTCore64.sys|Micro-Star MSI Afterburner|CVE-2019-16098||X|O||[KDU]|
-|GDrv.sys||CVE-2018-19320|MapMem|O|O (Virtual-to-Physical translation)||[KDU]|
-|ATSZIO64.sys|ASUSTeK WinFlash|CVE-2024-33222||O|O (Virtual-to-Physical translation)||[KDU]|
-|MsIo64.sys||CVE-2019-18845|WinIo||||[KDU]|
-|GLCKIO2.sys|ASRock Polychrome RGB|CVE-2018-18535, CVE-2018-18536, CVE-2018-18537|WinIo||||[KDU]|
-|EneIo64.sys|G.SKILL Trident Z Lighting Control|CVE-2020-12446|WinIo||||[KDU]|
-|WinRing0x64.sys|EVGA Precision X1|CVE-2020-14979|WinRing0||||[KDU]|
-|EneTechIo64.sys|Thermaltake TOUGHRAM Software||WinIo||||[KDU]|
-|phymemx64.sys|Huawei MateBook Manager||WinIo||||[KDU]|
-|rtkio64.sys|Realtek Dash Client Utility|CVE-2024-33224|PhyMem||||[KDU]|
-|ene.sys (EneTechIo64.sys)|MSI Dragon Center||WinIo||||[KDU]|
-|lha.sys||CVE-2019-8372|||||[KDU]|
-|AsIO2.sys|ASUS GPU Tweak|CVE-2021-28685|WinIo||||[KDU]|
-|DirectIo64.sys|PassMark DirectIO|CVE-2020-15479, CVE-2020-15480|||||[KDU]|
-|gmer64.sys|Gmer Antirootkit||||||[KDU]|
-|dbutil_2_3.sys||CVE-2021-21551|||||[KDU]|
-|mimidrv.sys|Mimikatz mimidrv||||||[KDU]|
-|kprocesshacker.sys|Process Hacker 2||||||[KDU]|
-|procexp152.sys|Process Explorer b1627||||||[KDU]|
-|dbutildrv2.sys||CVE-2021-36276|||||[KDU]|
-|dbk64.sys|Cheat Engine Dbk64||||||[KDU]|
-|AsIO3.sys|ASUS GPU Tweak II||WinIo||||[KDU]|
-|HW64.sys|Marvin Hardware Access Driver for Windows|CVE-2024-36054, CVE-2024-36055|||||[KDU]|
-|SysDrv3S.sys|CODESYS SysDrv3S|CVE-2022-22516|MapMem||||[KDU]|
-|amsdk_watchdog.sys|Watchdog Anti-Malware 4.1.422|CVE-2021-31728, CVE-2022-42045|||||[KDU], [CVE-2022-42045](https://github.com/ReCryptLLC/CVE-2022-42045)|
-|inpoutx64.sys|inpoutx64 Driver Version 1.2||||||[KDU]|
-|DirectIo64.sys|PassMark OSForensics DirectIO|CVE-2020-15479, CVE-2020-15480|||||[KDU]|
-|AsrDrv106.sys|ASRock IO Driver|CVE-2020-15368|RWEverything||||[KDU]|
-|ALSysIO64.sys|Core Temp||||||[KDU]|
-|AMDRyzenMasterDriver.sys|AMD Ryzen Master Service Driver|CVE-2020-12928|||||[KDU]|
-|physmem.sys|Physical Memory Access Driver||||||[KDU]|
-|LenovoDiagnosticsDriver.sys|Lenovo Diagnostics Driver for Windows 10 and later|CVE-2022-3699|||||[KDU]|
-|pcdsrvc_x64.sys|PC-Doctor|CVE-2019-12280|||||[KDU]|
-|WinIo64.sys|MSI Foundation Service||WinIo||||[KDU]|
-|etdsupp.sys|ETDi Support Driver|CVE-2023-32673|||||[KDU]|
-|KExplore.sys|MSI Foundation Service||Pavel Yosifovich (zodiacon)||||[KDU]|
-|KObjExp.sys|Kernel Object Explorer Driver||Pavel Yosifovich (zodiacon)||||[KDU]|
-|KExplore.sys|Kernel Explorer Driver||Pavel Yosifovich (zodiacon)||||[KDU]|
-|KRegExp.sys|Kernel Registry Explorer Driver||Pavel Yosifovich (zodiacon)||||[KDU]|
-|echo_driver.sys|Echo AntiCheat|CVE-2023-38817|||||[KDU]|
-|nvoclock.sys|NVidia System Utility Driver||||||[KDU]|
-|irec.sys|Binalyze (re-verify needed)|CVE-2023-41444|||||[KDU]|
-|PhyDMACC.sys|SLIC ToolKit||WinRing0||||[KDU]|
-|rzpnk.sys|Razer Overlay Support driver|CVE-2017-9769|||||[KDU]|
-|PdFwKrnl.sys|AMD USB-C Power Delivery Firmware Update Utility|CVE-2023-20598|||||[KDU]|
-|AODDriver215.sys|AMD OverDrive Driver|CVE-2020-12928|||||[KDU]|
-|wnBios64.sys|WnBios Driver||||||[KDU]|
-|eleetx1.sys|EVGA Low Level Driver||||||[KDU]|
-|AxtuDrv.sys|RW-Everything Read & Write Driver|CVE-2020-15368|RWEverything||||[KDU]|
-|AppShopDrv103.sys|AppShopDrv103 Driver|CVE-2020-15368|RWEverything||||[KDU]|
-|AsrDrv107n.sys|ASRock IO Driver|CVE-2020-15368|RWEverything||||[KDU]|
-|AsrDrv107.sys|ASRock IO Driver|CVE-2020-15368|RWEverything||||[KDU]|
-|pmxdrv64.sys|Intel(R) Management Engine Tools Driver||||||[KDU]|
-|WinRing0x64.sys|RealTemp 3.7.0.0|CVE-2023-1047|||||[WindowsKernelVuln](https://github.com/zeze-zeze/WindowsKernelVuln)|
-|mhyprot2.sys||CVE-2020-36603|||||[libmhyprot](https://github.com/kkent030315/libmhyprot)|
-|ucorew64.sys|||||||[NT_el3vate](https://github.com/vnescape/NT_el3vate)|
-|zam64.sys|MalwareFox AntiMalware 2.74.0.150|CVE-2021-31727, CVE-2021-31728|||||[CVE-2021-31727 and CVE-2021-31728](https://github.com/irql/CVE-2021-31728)|
-|amsdk_zemana.sys|Zemana AntiMalware 3.2.28|CVE-2022-42045|||||[CVE-2022-42045](https://github.com/ReCryptLLC/CVE-2022-42045)|
-|zamguard64.sys|Zemana AntiLogger v2.74.2.664|CVE-2022-42045|||||[CVE-2022-42045](https://github.com/ReCryptLLC/CVE-2022-42045)|
-|zam64.sys|Zemana AntiLogger v2.74.2.664|CVE-2022-42045|||||[CVE-2022-42045](https://github.com/ReCryptLLC/CVE-2022-42045)|
-|mydrivers64.sys|DriverGenius 9.70.0.346|CVE-2023-1679|||||[WindowsKernelVuln](https://github.com/zeze-zeze/WindowsKernelVuln)|
-|IMFCameraProtect.sys|IObit Malware Fighter 9.4.0.776|CVE-2023-1646|||||[WindowsKernelVuln](https://github.com/zeze-zeze/WindowsKernelVuln)|
+|FileName|Assigned CVE|Source Base|Physical Memory R/W|Kernel Virtual Memory R/W|MSR R/W|Original Source Available In|
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+|<abbr title="Intel Network Adapter Diagnostic Driver">iqvw64.sys, iqvw64e.sys|CVE-2015-2291||O|O||[KDU], [KDMapper]|
+|<abbr title="Micro-Star MSI Afterburner">RTCore64.sys|CVE-2019-16098|||O||[KDU]|
+|GDrv.sys|CVE-2018-19320|MapMem|O|||[KDU]|
+|<abbr title="ASUSTeK WinFlash">ATSZIO64.sys|CVE-2024-33222||O|||[KDU]|
+|MsIo64.sys|CVE-2019-18845|WinIo|O|||[KDU]|
+|<abbr title="ASRock Polychrome RGB">GLCKIO2.sys|CVE-2018-18535, CVE-2018-18536, CVE-2018-18537|WinIo|O|||[KDU]|
+|<abbr title="G.SKILL Trident Z Lighting Control">EneIo64.sys|CVE-2020-12446|WinIo|O|||[KDU]|
+|<abbr title="EVGA Precision X1">WinRing0x64.sys|CVE-2020-14979|WinRing0||||[KDU]|
+|<abbr title="Thermaltake TOUGHRAM Software">EneTechIo64.sys||WinIo||||[KDU]|
+|<abbr title="Huawei MateBook Manager">phymemx64.sys||WinIo||||[KDU]|
+|<abbr title="Realtek Dash Client Utility">rtkio64.sys|CVE-2024-33224|PhyMem||||[KDU]|
+|<abbr title="MSI Dragon Center">ene.sys (EneTechIo64.sys) ||WinIo||||[KDU]|
+|lha.sys|CVE-2019-8372|||||[KDU]|
+|<abbr title="ASUS GPU Tweak">AsIO2.sys|CVE-2021-28685|WinIo||||[KDU]|
+|<abbr title="PassMark DirectIO">DirectIo64.sys|CVE-2020-15479, CVE-2020-15480|||||[KDU]|
+|<abbr title="Gmer Antirootkit">gmer64.sys||||||[KDU]|
+|dbutil_2_3.sys|CVE-2021-21551|||||[KDU]|
+|<abbr title="Mimikatz mimidrv">mimidrv.sys||||||[KDU]|
+|<abbr title="Process Hacker 2">kprocesshacker.sys||||||[KDU]|
+|<abbr title="Process Explorer b1627">procexp152.sys||||||[KDU]|
+|dbutildrv2.sys|CVE-2021-36276|||||[KDU]|
+|<abbr title="Cheat Engine Dbk64">dbk64.sys||||||[KDU]|
+|<abbr title="ASUS GPU Tweak II">AsIO3.sys||WinIo||||[KDU]|
+|<abbr title="Marvin Hardware Access Driver for Windows">HW64.sys|CVE-2024-36054, CVE-2024-36055|||||[KDU]|
+|<abbr title="CODESYS SysDrv3S">SysDrv3S.sys|CVE-2022-22516|MapMem||||[KDU]|
+|<abbr title="Watchdog Anti-Malware 4.1.422">amsdk_watchdog.sys|CVE-2021-31728, CVE-2022-42045|||||[KDU], [CVE-2022-42045](https://github.com/ReCryptLLC/CVE-2022-42045)|
+|<abbr title="inpoutx64 Driver Version 1.2">inpoutx64.sys||||||[KDU]|
+|<abbr title="PassMark OSForensics DirectIO">DirectIo64.sys|CVE-2020-15479, CVE-2020-15480|||||[KDU]|
+|<abbr title="ASRock IO Driver">AsrDrv106.sys|CVE-2020-15368|RWEverything||||[KDU]|
+|<abbr title="Core Temp">ALSysIO64.sys||||||[KDU]|
+|<abbr title="AMD Ryzen Master Service Driver">AMDRyzenMasterDriver.sys|CVE-2020-12928|||||[KDU]|
+|<abbr title="Physical Memory Access Driver">physmem.sys||||||[KDU]|
+|<abbr title="Lenovo Diagnostics Driver for Windows 10 and later">LenovoDiagnosticsDriver.sys|CVE-2022-3699|||||[KDU]|
+|<abbr title="PC-Doctor">pcdsrvc_x64.sys|CVE-2019-12280|||||[KDU]|
+|<abbr title="MSI Foundation Service">WinIo64.sys||WinIo||||[KDU]|
+|<abbr title="ETDi Support Driver">etdsupp.sys|CVE-2023-32673|||||[KDU]|
+|<abbr title="Kernel Object Explorer Driver">KObjExp.sys||Pavel Yosifovich (zodiacon)||||[KDU]|
+|<abbr title="Kernel Explorer Driver">KExplore.sys||Pavel Yosifovich (zodiacon)||||[KDU]|
+|<abbr title="Kernel Registry Explorer Driver">KRegExp.sys||Pavel Yosifovich (zodiacon)||||[KDU]|
+|<abbr title="Echo AntiCheat">echo_driver.sys|CVE-2023-38817|||||[KDU]|
+|<abbr title="NVidia System Utility Driver">nvoclock.sys||||||[KDU]|
+|<abbr title="Binalyze">irec.sys|CVE-2023-41444|||||[KDU]|
+|<abbr title="SLIC ToolKit">PhyDMACC.sys||WinRing0||||[KDU]|
+|<abbr title="Razer Overlay Support driver">rzpnk.sys|CVE-2017-9769|||||[KDU]|
+|<abbr title="AMD USB-C Power Delivery Firmware Update Utility">PdFwKrnl.sys|CVE-2023-20598|||||[KDU]|
+|<abbr title="AMD OverDrive Driver">AODDriver215.sys|CVE-2020-12928|||||[KDU]|
+|<abbr title="WnBios Driver">wnBios64.sys||||||[KDU]|
+|<abbr title="EVGA Low Level Driver">eleetx1.sys||||||[KDU]|
+|<abbr title="RW-Everything Read & Write Driver">AxtuDrv.sys|CVE-2020-15368|RWEverything||||[KDU]|
+|<abbr title="AppShopDrv103 Driver">AppShopDrv103.sys|CVE-2020-15368|RWEverything||||[KDU]|
+|<abbr title="ASRock IO Driver">AsrDrv107n.sys|CVE-2020-15368|RWEverything||||[KDU]|
+|<abbr title="ASRock IO Driver">AsrDrv107.sys|CVE-2020-15368|RWEverything||||[KDU]|
+|<abbr title="Intel(R) Management Engine Tools Driver">pmxdrv64.sys||||||[KDU]|
+|<abbr title="RealTemp 3.7.0.0">WinRing0x64.sys|CVE-2023-1047|||||[WindowsKernelVuln](https://github.com/zeze-zeze/WindowsKernelVuln)|
+|<abbr title="Genshin Impact Anti-Cheat">mhyprot2.sys|CVE-2020-36603|||||[libmhyprot](https://github.com/kkent030315/libmhyprot)|
+|ucorew64.sys||||||[NT_el3vate](https://github.com/vnescape/NT_el3vate)|
+|<abbr title="MalwareFox AntiMalware 2.74.0.150">zam64.sys|CVE-2021-31727, CVE-2021-31728|||||[CVE-2021-31727 and CVE-2021-31728](https://github.com/irql/CVE-2021-31728)|
+|<abbr title="Zemana AntiMalware 3.2.28">amsdk_zemana.sys|CVE-2022-42045|||||[CVE-2022-42045](https://github.com/ReCryptLLC/CVE-2022-42045)|
+|<abbr title="Zemana AntiLogger v2.74.2.664">zamguard64.sys|CVE-2022-42045|||||[CVE-2022-42045](https://github.com/ReCryptLLC/CVE-2022-42045)|
+|<abbr title="Zemana AntiLogger v2.74.2.664">zam64.sys|CVE-2022-42045|||||[CVE-2022-42045](https://github.com/ReCryptLLC/CVE-2022-42045)|
+|<abbr title="DriverGenius 9.70.0.346">mydrivers64.sys|CVE-2023-1679|||||[WindowsKernelVuln](https://github.com/zeze-zeze/WindowsKernelVuln)|
+|<abbr title="IObit Malware Fighter 9.4.0.776">IMFCameraProtect.sys|CVE-2023-1646|||||[WindowsKernelVuln](https://github.com/zeze-zeze/WindowsKernelVuln)|
 
 ## Kernel process access
 
