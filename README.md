@@ -1,5 +1,7 @@
 # SharpKernel :: Unleash Windows Kernel Capabilities in C#
 
+[한국어 버전 설명서](README.ko.md)
+
 <p align="center">
     <img src="logo.png" width="300px" height="auto">
 </p>
@@ -14,13 +16,15 @@ Also supports additional features like unsigned kernel driver manual-mapping, sp
 
 GOAL: Support all vulnerable driver existing on this world.
 
-* [KDMapper by TheCruz](https://github.com/TheCruZ/kdmapper)
-* [KDU by hfiref0x](https://github.com/hfiref0x/kdu)
-* [UC: Vulnerable Driver Megathread](https://www.unknowncheats.me/forum/anti-cheat-bypass/334557-vulnerable-driver-megathread.html)
+## Based Projects
+
+* [hfiref0x/KDU](https://github.com/hfiref0x/kdu)
+* [TheCruz/KDMapper](https://github.com/TheCruZ/kdmapper)
+* [UnknownCheats: Vulnerable Driver Megathread](https://www.unknowncheats.me/forum/anti-cheat-bypass/334557-vulnerable-driver-megathread.html)
 
 ## Notice
 
-1. While this project is for educational purpose, I don't care whether you use this repository as malicious, cheat development, or any other purpose. Always use this project at your own risk. Also, don't ask me about cheat development.
+1. While this project is for educational purpose, I don't care whether you use this repository as virus, backdoor, rootkit, cheat development, or any other purpose. Always use this project at your own risk. Also, don't ask me about cheat development.
 
 2. Some providers/features may or may not work depending on your OS version, HVCI enabled state, and MSDBL.
 
@@ -40,7 +44,7 @@ If your anti-virus software keeps flag SharpKernel, please add it to the exclusi
 
 If you really want to bypass the AV flags, obfuscate/pack this library by yourself. (There are a plenty of useful open-source .NET obfuscators out there)
 
-## Potential Purpose of this Project
+## Features
 
 Integrated features:
 
@@ -67,6 +71,7 @@ Integrated features:
 * DriverTraceCleaner: Clean up all traces that can be used to track if the vulnerable driver has been loaded. (e.g. PiDDBCacheTable)
 
 * DseOverwriter: Temporarly disable/tune DSE(Driver Signature Enforcement) to allow your unsigned driver to be loaded.
+todo: [DSEFix](https://github.com/hfiref0x/DSEFix)
 
 * PPLLauncher: Launch a program as PPL(ProtectedProcess-Light) right.
 
@@ -80,21 +85,15 @@ Can be utilized to:
 * Run some shellcode in kernel-mode.
 * Inject your own code/driver to kernel-mode and bypass some kernel-mode rootkits/shitwares (a.k.a. "anti-cheats").
 
-## Features
-
-* TODO: A simple kernel-mode physical/virtual memory read-write operation interface.
-* TODO: Unsigned driver loading/mapping via various methods:
-    * by hooking kernel-mode functions and manual-map the driver ([KDMapper](https://github.com/TheCruZ/kdmapper))
-    * by patching CI.dll!g_CiOptions to temporarily disable DSE then use NtLoadDriver ([DSEFix](https://github.com/hfiref0x/DSEFix))
-* TODO: 
-
 ## How to use
 
 ```csharp
 static void Main(string[] args)
 {
     // Initialize the kernel session
-    using (var provider = new KernelSession(new IntelNal(), new ProcExpDispatchHandlerHijack()))
+    using (var provider = new KernelSession(
+        new IntelNal(), // Provider
+        new ProcExpDispatchHandlerHijack())) // Shellcode Execution Method
     {
         // Read arbitrary physical memory
         var memoryAccess = provider.GetMemoryAccessor();
