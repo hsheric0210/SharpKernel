@@ -18,6 +18,18 @@ GOAL: Support all vulnerable driver existing on this world.
 * [KDU by hfiref0x](https://github.com/hfiref0x/kdu)
 * [UC: Vulnerable Driver Megathread](https://www.unknowncheats.me/forum/anti-cheat-bypass/334557-vulnerable-driver-megathread.html)
 
+## Notice
+
+1. While this project is for educational purpose, I don't care whether you use this repository as malicious, cheat development, or any other purpose. Always use this project at your own risk. Also, don't ask me about cheat development.
+
+2. Some providers/features may or may not work depending on your OS version, HVCI enabled state, and MSDBL.
+
+3. Most vulnerable drivers are blocked by MSDBL (Microsoft Vulnerable Driver Blocklist). You may want to disable that feature.
+
+4. This project will not be uploaded to NuGet or any other package management service because they will surely flag this project as 'MALICIOUS'.
+
+5. Nearly all code of this project is based on [hfiref0x](https://github.com/hfiref0x)'s [KDU](https://github.com/hfiref0x/KDU) project. What I have done is to port the C/C++ project to C#, and add more providers, features, and junks; that's all. All credit for the wonderful codebase should go to [him](https://github.com/hfiref0x).
+
 ## Anti-virus False Flags
 
 Because of the nature of this project, anti-virus softwares MAY flag binaries and source code files as malware.
@@ -32,13 +44,31 @@ If you really want to bypass the AV flags, obfuscate/pack this library by yourse
 
 Integrated features:
 
-* IMemoryAccessProvider: Read/Write arbitrary memory addresses on your computor, without any restrictions.
+* IMemoryAccessProvider: Read/Write kernel virtual memory or physical memory using vulnerable driver's IOCTLs.
+
+* ArbitraryProcessVmAccessor: Read/Write arbitrary process' virtual memory without any limitations. It translates virtual address to to physical address then directly reads/writes the corresponding physical address, thus bypassing any restrictions.
+
 * DriverMapper: Manual map your own kernel mode driver.
-* DseOverwriter: Temporarly disable DSE(Driver Signature Enforcement) to load your unsigned driver.
-* DriverTraceCleaner: Clean up all traces that can be used to track if the vulnerable driver is loaded before. (e.g. PiDDBCacheTable)
+    * MapThenCallEntry: Map the driver then call the DriverEntry synchronously. (Make sure DriverEntry return as fast as possible) (KDMapper's method)
+
+    * MapThenStartAsSystemThread: Map the driver then start a system thread with the DriverEntry code. (KDU Shellcode V1 method)
+
+    * MapThenStartAsWorkerThread: Map the driver then start a worker thread with the DriverEntry code. (KDU Shellcode V2 method)
+
+    * MapWithDriverObject: Map the driver by manually building DriverObject then start a system thread with the DriverEntry code. (KDU Shellcode V3 method)
+
 * KillProcess: Terminate arbitrary processes, even a protected one.
+    * KillByIOCTL: Kill an arbitrary process by passing its PID to vulnerable driver. (Only some of the providers which support the process kill IOCTL support this method)
+    * KillByHandleDuplication: Kill an arbitrary process by obtaining a full-privileged handle to the target process leveraging the vulnerable driver. (Only some of the providers that support arbitrary handle duplication IOCTL support this method)
+    * KillByMemoryCorruption: Kill an arbitrary process by completely messing up its memory regions with dummy data, causing a memory corruption crash.
+
+* CallbackDisabler: Temporarily disable/unregister ALL kernel-mode callbacks (ObRegisterCallbacks, PsSetCreateProcessNotifyRoutine, and more). You can execute your code without being restricted/blocked by 'anti'-things (e.g. anti-malwares, anti-cheats).
+
+* DriverTraceCleaner: Clean up all traces that can be used to track if the vulnerable driver has been loaded. (e.g. PiDDBCacheTable)
+
+* DseOverwriter: Temporarly disable/tune DSE(Driver Signature Enforcement) to allow your unsigned driver to be loaded.
+
 * PPLLauncher: Launch a program as PPL(ProtectedProcess-Light) right.
-* CallbackDisabler: Temporarily disable/unregister ALL kernel-mode callbacks (ObRegisterCallbacks, PsSetCreateProcessNotifyRoutine, and more) to execute your code without being restricted/blocked by anti-things (e.g. anti-malwares, anti-cheats).
 
 Can be utilized to:
 
